@@ -306,3 +306,14 @@ class Contact(models.Model):
         ordering = ["-date_time"]        
     def __unicode__(self): 
         return '%s %s %s' % (self.date_time,self.contact_subject,self.is_it_close)
+
+class Static_Pages(models.Model):
+    title = models.CharField(u'Title', max_length=1000) 
+    text = RedactorField(verbose_name=u'Текст на странице',default=u'This page is under construction')
+    num=models.IntegerField(verbose_name=u'Порядковый номер страницы в списке',unique=True)
+    def __unicode__(self):
+        return '%s %s' % (self.title,self.num)
+    class Meta:
+        ordering = ["num"]
+        verbose_name_plural = "статические страницы"
+        

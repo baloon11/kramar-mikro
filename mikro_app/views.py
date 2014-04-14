@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render_to_response
-from mikro_app.models import Tech_Info,Transport_Company,Orders,Contact
+from mikro_app.models import Tech_Info,Transport_Company,Orders,Contact,Static_Pages
 from mikro_app.forms import Homepage_Form,Orders_Form,Contacts
 from django.template import RequestContext 
 from django.http import HttpResponseRedirect
@@ -88,3 +88,7 @@ def contacts(request):
         form=Contacts()
     return render_to_response('contacts.html',{'form':form,'all_is_right': all_is_right}, 
                                        context_instance=RequestContext(request) )
+            
+def static_page(request,num):                                  
+    return render_to_response('static_page.html',{'static_page':Static_Pages.objects.get(num=num)},
+                                                   context_instance=RequestContext(request))

@@ -18,6 +18,8 @@ urlpatterns = patterns('',
 
     url(r'^shipping_and_payment/$','mikro_app.views.shipping_and_payment',name='shipping_and_payment'), 
     url(r'^contacts/$','mikro_app.views.contacts',name='contacts'), 
+    url(r'^static_page/(?P<num>\d+)/$','mikro_app.views.static_page',name='static_page'),
+
 
     url(r'^redactor/', include('redactor.urls')),
         

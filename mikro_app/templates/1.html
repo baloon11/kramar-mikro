@@ -43,10 +43,17 @@
 
 <div align="right" style="padding-top:5px" >
 <form class="form-inline">
+
+{% for static_page in static_pages%}
+<a class="btn btn-inverse"
+href="{% url 'static_page' num=static_page.num %}">{{static_page.title}} </a>
+{%endfor%}
+
 <a class="btn btn-inverse"
 href="{% url 'contacts' %}">{{tech_info.label_button_contacts}} </a>
 <a class="btn  btn-inverse"
 href="{% url 'shipping_and_payment' %}">{{tech_info.label_button_shipping_and_payment}} </a>
+
 </form>
 </div>
 
