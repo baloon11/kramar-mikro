@@ -1,0 +1,26 @@
+.bodystyle{
+background:black;
+padding-top: 80px; 
+background-repeat: no-repeat;
+background-position:50% top; 
+background-attachment: fixed;
+color: #cccccc;
+background-image: url('m31.jpg');
+}
+.social_network{
+padding-top: 100px;
+padding-left: 12%;
+position:fixed;}
+
+.transport_compamy{ }
+
+A:focus{outline:none;}
+
+A:link{color:#BBB395;}
+
+A:visited{color:#BBB395;}
+
+A:active{color:#BBB395; }
+
+A:hover{color:#CDC8B1;}
+

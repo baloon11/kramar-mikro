@@ -1,0 +1,75 @@
+[
+{"pk": 1, "model": "school.Start",
+ "fields": {"title_eng":"Odessa Astronomical Society"}            
+                
+},
+
+{"pk": 1, "model": "school.Static_Pages",
+ "fields": {"title":" Abstract Submission",
+            "num":1}    
+},
+
+{"pk": 2, "model": "school.Static_Pages",
+ "fields": {"title":"Abstracts of Contributions",
+            "num":2}    
+},
+
+{"pk": 3, "model": "school.Static_Pages",
+ "fields": {"title":" Contacts",
+            "num":3}    
+},
+
+{"pk": 4, "model": "school.Static_Pages",
+ "fields": {"title":" Dates and Deadlines",
+            "num":4}    
+},
+
+{"pk": 5, "model": "school.Static_Pages",
+ "fields": {"title":"List of Participants",
+            "num":5}    
+},
+
+{"pk": 6, "model": "school.Static_Pages",
+ "fields": {"title":" Local Info",
+            "num":6}    
+},
+
+{"pk": 7, "model": "school.Static_Pages",
+ "fields": {"title":" Odessa Gamow’s conferences",
+            "num":7}    
+},
+
+{"pk": 8, "model": "school.Static_Pages",
+ "fields": {"title":" Odessa in George Gamow World Line",
+            "num":8}    
+},
+
+{"pk": 9, "model": "school.Static_Pages",
+ "fields": {"title":"Organizers and sponsors",
+            "num":9}    
+},
+
+{"pk": 10, "model": "school.Static_Pages",
+ "fields": {"title":" Preliminary List of Plenary Talks",
+            "num":10}    
+},
+{"pk": 11, "model": "school.Static_Pages",
+ "fields": {"title":"Proceedings",
+            "num":11}    
+},
+
+{"pk": 12, "model": "school.Static_Pages",
+ "fields": {"title":" Registration",
+            "num":12}    
+},
+
+{"pk": 13, "model": "school.Static_Pages",
+ "fields": {"title":"Scientific Program",
+            "num":13}    
+},
+
+{"pk": 14, "model": "school.Static_Pages",
+ "fields": {"title":"Scientific Topics",
+            "num":14}    
+}
+]

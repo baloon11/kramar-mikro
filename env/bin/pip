@@ -1,0 +1,10 @@
+#!/home/mikita/gamov_and_kramar_mikro_ubuntu/kramar_mikro_short_version_2/env/bin/python
+# EASY-INSTALL-ENTRY-SCRIPT: 'pip==1.1','console_scripts','pip'
+__requires__ = 'pip==1.1'
+import sys
+from pkg_resources import load_entry_point
+
+if __name__ == '__main__':
+    sys.exit(
+        load_entry_point('pip==1.1', 'console_scripts', 'pip')()
+    )
