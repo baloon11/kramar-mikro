@@ -63,7 +63,7 @@ class Tech_Info(models.Model):
     label_cod_or_bankcard=models.CharField(verbose_name=u'наложенный платеж или перевод на банковскую карту',
                                max_length=1000,
                                help_text=' надпись слева от формы',
-                               default=u'наложенный платеж или перевод на банковскую карту')
+                               default=u'способ оплаты')
     #label_bankcard=models.CharField(
      #                         verbose_name=u'перевод на банковскую карту',
      #                         max_length=1000,
