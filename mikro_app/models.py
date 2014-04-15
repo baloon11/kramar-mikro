@@ -139,10 +139,6 @@ class Tech_Info(models.Model):
 
     email=models.EmailField(verbose_name=u'email магазина',default=u'email@ukr.net',blank=True)
     
-    social_network_title=models.CharField(verbose_name=u'Шапка социальных сетей',
-                                          max_length=100,
-                                          blank=True,
-                                          default=u'Также вы можете найти нас')
 
     all_social_network_bool= models.BooleanField(default=True,
                                                  blank=True, 

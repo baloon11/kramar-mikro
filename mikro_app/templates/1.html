@@ -71,11 +71,9 @@ href="{% url 'shipping_and_payment' %}">{{tech_info.label_button_shipping_and_pa
 
 
 <div class="span2">
-
 <div class="social_network">
 {% if tech_info.all_social_network_bool%}
 <div align="right">
-<h4>{{tech_info.social_network_title}}</h4>
 <br>
 <br>
 {% if tech_info.vk_bool%}
@@ -96,15 +94,11 @@ href="{{tech_info.youtube}}"><img src="{{STATIC_URL}}youtube.png" alt="Youtube">
 <br>
 <br>
 {% endif %}
-
-
 </div>
-{% endif %}
-
+{%endif%}
 </div>
 
 </div>
-
 
 </div>
 </div>
