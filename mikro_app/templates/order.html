@@ -1,0 +1,72 @@
+{% extends '1.html' %}
+{% block title %}
+{{tech_info.logo}} {{tech_info.order_title}}
+{% endblock %}
+
+{% block center %}
+<div align="center">
+
+<div class="row">
+    
+<div class="span7">
+
+<div align="center">
+{{tech_info.order_text|safe}}   
+</div>
+
+<div align="right">
+<div style=" padding-right: 110px ">
+
+<div style=" padding-right: 55px ">
+{% if form.errors %}
+<p style="color: red;">
+Пожалуйста, исправьте ошибки  
+</p>
+{% endif %}
+</div>
+
+<form action="" method="post">  {% csrf_token %}
+<table>
+{{form}}
+</table>
+<div style=" padding-right: 110px ">
+<input type="submit"  class="btn btn-inverse" value="{{tech_info.label_button_send}}">
+</div>
+</form>
+</div>
+</div>
+<br>
+<br>
+<br>
+<br>
+</div>
+
+<div class="span3">
+<div class="transport_compamy">
+{%for transport_company in transport_company_context%}
+{{transport_company.name}}<br>
+<a href="{{transport_company.url_offices}}">{{tech_info.label_url_offices}}</a><br>
+<a href="{{transport_company.url_shipping_and_payment}}">{{tech_info.label_url_shipping_and_payment}}</a><br>
+{%if transport_company.cod %}
+{{tech_info.cod_is_possible|safe}}
+<br>
+Пересылка( не наложенным платежем) {{transport_company.money}}грн
+{%else%}
+{{tech_info.cod_is_impossible|safe}}
+<br>
+Пересылка( не наложенным платежем) {{transport_company.money}}грн
+{%endif%}
+<br>
+<br>
+{%endfor%}
+</div>
+</div>
+</div>
+
+
+
+</div>
+
+{% endblock %}
+<!-------------------------------->
+

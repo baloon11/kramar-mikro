@@ -1,0 +1,58 @@
+{% extends '1.html' %}
+{% block title %}
+{{tech_info.logo}} {{tech_info.title_contacts}}
+{% endblock %}
+
+{% block center %}
+
+
+{% if tech_info.email%}
+<div align="right">
+<a href="mailto:{{tech_info.email}}"><h4>{{tech_info.email}}</h4></a>
+</div>
+{% endif %}
+
+
+{% if all_is_right %}
+<br>
+<div align="right">
+<h4>{{ all_is_right }}</h4>	
+</div>
+{% endif %}
+
+
+<div align="center">
+<br>
+<br>
+{{tech_info.contacts_text|safe}}
+<br>
+<br>
+<div style=" padding-right: 90px ">
+
+<div style=" padding-left: 90px ">
+
+{% if form.errors %}
+<p style="color: red;">
+Пожалуйста, исправьте ошибки   
+</p>
+{% endif %}
+</div>
+
+<form action="" method="post">  {% csrf_token %}
+<table>
+{{form}}
+</table>
+
+<div style=" padding-left: 90px ">
+<input type="submit"  class="btn btn-inverse" 
+value="{{tech_info.label_button_contacts_in_page}}">
+</div>
+</form>
+</div>
+
+</div>
+<br>
+<br>
+<br>
+<br>
+{% endblock %}

@@ -1,0 +1,96 @@
+{% extends '1.html' %}
+{% block title %}
+{{tech_info.logo}}
+
+{% endblock %}
+{% block homepage %}
+<link href="{{STATIC_URL}}homepage.css" rel="stylesheet">
+{% endblock %}
+
+{% block center %}
+
+{% if thanks_for_buying %}
+<div align="left"><h4>{{thanks_for_buying|safe}}</h4></div>
+{% if cod %}
+<h4>Сумма без учета доставки(вы выбрали наложенный платеж) {{sum_price}} грн
+</h4>
+{%else%}
+<h4>Сумма c учетом доставки(вы выбрали оплату банковской картой) {{sum_price}} грн
+</h4>
+{%endif%}
+
+{%endif%}
+
+{% if  contacts_thanks%}
+<div align="left"><h4>{{contacts_thanks|safe}}</h4> </div>
+
+{%endif%}
+<br>
+<br>
+<div align="center">
+{% if static_img.count%}
+<div align="center">
+
+<ul class="thumbnails">
+    
+{% for img in static_img%}
+                                
+    <li class="span2">    
+    <a href="{{img.img.url}}" class="thumbnail"  rel="lightbox[slideshow]" title="{{img.title}}">
+        <img src="{{img.img.url}}" alt="{{img.title}}">
+    </a>
+    </li>
+{%endfor%}    
+    </ul>
+
+</div>
+
+{%endif%}
+{{tech_info.homepage_text|safe}} 
+<br>
+<br>
+
+
+{% if tech_info.unique == False %}
+<div style=" padding-left: 90px ">
+{% if form.errors %}
+<p style="color: red;">
+Пожалуйста, исправьте ошибки  
+</p>
+{% endif %}
+<form action="" method="post">  {% csrf_token %}
+<table>
+<tr>
+<td >{{form.num}}</td>
+<td>
+
+<div style="padding-left:10px;">
+<input type="submit"  class="btn btn-inverse" value="{{tech_info.label_buy_button}}">
+
+</div> 
+
+</td>
+</tr>
+</table>
+</form>
+</div>
+
+<br>
+<br>
+<br>
+<br>
+{%endif%}
+
+{% if tech_info.unique == True %}
+<a class="btn  btn btn-inverse"
+href="{% url 'order_view' num=1 %}">{{tech_info.label_buy_button}} </a>
+{% endif %}
+</div>
+<br>
+<br>
+<br>
+<br>
+
+{% endblock %}
+
+
