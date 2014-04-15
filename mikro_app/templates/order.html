@@ -14,10 +14,10 @@
 {{tech_info.order_text|safe}}   
 </div>
 
-<div align="right">
-<div style=" padding-right: 110px ">
+<div align="right" style=" padding-left: 80px">
+<div style=" padding-right: 140px">
 
-<div style=" padding-right: 55px ">
+<div style=" padding-right: 80px ">
 {% if form.errors %}
 <p style="color: red;">
 Пожалуйста, исправьте ошибки  
@@ -29,7 +29,7 @@
 <table>
 {{form}}
 </table>
-<div style=" padding-right: 110px ">
+<div style=" padding-right: 140px ">
 <input type="submit"  class="btn btn-inverse" value="{{tech_info.label_button_send}}">
 </div>
 </form>
@@ -69,4 +69,3 @@
 
 {% endblock %}
 <!-------------------------------->
-
