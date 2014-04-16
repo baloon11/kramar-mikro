@@ -1,6 +1,9 @@
 # coding: utf-8
 from django.db import models
 from redactor.fields import RedactorField
+
+
+
 def list_payment_method():
     payment_method_list=[(u'банковская карта',u'банковская карта'),
                         (u'наложенный платеж',u'наложенный платеж') ]
@@ -26,21 +29,23 @@ def list_transport_company():
         list_name.append( (u'свяжитесь с менеджером по поводу доставки',
                          u'свяжитесь с менеджером по поводу доставки') )
         return list_name
-
+'''
 def list_lang():
     list_name=list()
-    all_lang=Lang.objects.count()
+    all_lang=Language.objects.count()
     if all_lang>0:
         for l in xrange(1,all_lang+1):
-            lang_abbr=Lang.objects.get(id=l).abbr
+            lang_abbr=Lang.objects.get(id=l).lang_abbr
             list_name.append( (unicode(lang_abbr),unicode(lang_abbr)) ) 
         return list_name
     else:
         list_name.append( (u'этот язык будет использован по умолчанию',
                          u'этот язык будет использован по умолчанию') )
-        return list_name 
+        return list_name '''
 
-
+'''
+def list_lang():
+    return((u'rus',u'rus'),(u'eng',u'eng'))'''
 
 def contact_is_it_close():
     is_it_close_list=[(u'не прочитано',u'не прочитано'),
@@ -51,8 +56,9 @@ def contact_is_it_close():
 class Tech_Info(models.Model):                           
     price=models.IntegerField(verbose_name=u'цена',default=0)
     lang=models.CharField(verbose_name=u'двух(трех)буквенная аббревиатура языка',
-                          choices=list_lang(),
-                         default=u'lang',
+                          default=u'ru', 
+                          blank=True,
+                          unique=True,
                           max_length=3)
 
     unique=models.BooleanField(default=True,
@@ -334,7 +340,7 @@ class Static_Pages(models.Model):
         verbose_name_plural = "статические страницы"
         
 
-class Lang(models.Model):
+class Language(models.Model):
     lang_abbr= models.CharField(u'двух(трех)буквенная аббревиатура языка', max_length=3) 
     default=models.BooleanField(default=False,
                                 verbose_name=u'поставить этот язык по умолчанию для сайта')
@@ -343,4 +349,6 @@ class Lang(models.Model):
         return '%s %s' % (self.lang_abbr,self.default)
     class Meta:
         verbose_name_plural = "Языки"
+
+
         
