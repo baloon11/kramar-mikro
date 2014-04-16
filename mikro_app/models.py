@@ -346,7 +346,11 @@ class Language(models.Model):
                                 verbose_name=u'поставить этот язык по умолчанию для сайта')
                                     
     def __unicode__(self):
-        return '%s %s' % (self.lang_abbr,self.default)
+        if self.default==True:
+            def_ault=u'Этот язык установлен для сайта по умолчанию'
+        else:
+            def_ault=u''
+        return '%s %s' % (self.lang_abbr,def_ault)
     class Meta:
         verbose_name_plural = "Языки"
 
