@@ -27,6 +27,21 @@ def list_transport_company():
                          u'свяжитесь с менеджером по поводу доставки') )
         return list_name
 
+def list_lang():
+    list_name=list()
+    all_lang=Lang.objects.count()
+    if all_lang>0:
+        for l in xrange(1,all_lang+1):
+            lang_abbr=Lang.objects.get(id=l).abbr
+            list_name.append( (unicode(lang_abbr),unicode(lang_abbr)) ) 
+        return list_name
+    else:
+        list_name.append( (u'этот язык будет использован по умолчанию',
+                         u'этот язык будет использован по умолчанию') )
+        return list_name 
+
+
+
 def contact_is_it_close():
     is_it_close_list=[(u'не прочитано',u'не прочитано'),
                       (u'прочитано',u'прочитано') ]
@@ -35,6 +50,11 @@ def contact_is_it_close():
 
 class Tech_Info(models.Model):                           
     price=models.IntegerField(verbose_name=u'цена',default=0)
+    lang=models.CharField(verbose_name=u'двух(трех)буквенная аббревиатура языка',
+                          choices=list_lang(),
+                         default=u'lang',
+                          max_length=3)
+
     unique=models.BooleanField(default=True,
                                     verbose_name=u'Товар продается в единичном экземпляре \
                                     (галочка-да-в единичном)',
@@ -312,4 +332,15 @@ class Static_Pages(models.Model):
     class Meta:
         ordering = ["num"]
         verbose_name_plural = "статические страницы"
+        
+
+class Lang(models.Model):
+    lang_abbr= models.CharField(u'двух(трех)буквенная аббревиатура языка', max_length=3) 
+    default=models.BooleanField(default=False,
+                                verbose_name=u'поставить этот язык по умолчанию для сайта')
+                                    
+    def __unicode__(self):
+        return '%s %s' % (self.lang_abbr,self.default)
+    class Meta:
+        verbose_name_plural = "Языки"
         
