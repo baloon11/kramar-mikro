@@ -6,10 +6,10 @@ from mikro_app.models import Tech_Info,Transport_Company,Orders,Static_Img,Conta
 def list_lang():
     list_name=list()
     all_lang=Language.objects.count()
-    
+    default_tech_info=Tech_Info.objects.get(id=1)    
     for l in xrange(1,all_lang+1):
         lang_abbr=Language.objects.get(id=l).lang_abbr
-        list_name.append((u'rus',u'rus'))
+        list_name.append((default_tech_info.lang,default_tech_info.lang))
         list_name.append((unicode(lang_abbr),unicode(lang_abbr)) ) 
     return list_name
     
