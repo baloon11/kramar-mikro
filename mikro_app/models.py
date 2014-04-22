@@ -16,20 +16,6 @@ def list_is_it_close():
                      (u'обработанный',u'обработанный') ]
     return is_it_close_list 
 
-"""
-def list_transport_company():
-    list_name=list()    
-    all_comp=Transport_Company.objects.count()
-    if all_comp>0:
-        for n in xrange(1,all_comp+1):
-            comp_name=Transport_Company.objects.get(id=n).name
-            list_name.append( (unicode(comp_name),unicode(comp_name)) ) #unicode(comp_name)
-        return list_name
-    else:
-        list_name.append( (u'свяжитесь с менеджером по поводу доставки',
-                         u'свяжитесь с менеджером по поводу доставки') )
-        return list_name"""
-
 
 def contact_is_it_close():
     is_it_close_list=[(u'не прочитано',u'не прочитано'),
@@ -250,7 +236,6 @@ class Orders(models.Model):
     tel=models.CharField(verbose_name=u'телефон',max_length=20)
     city=models.CharField(verbose_name=u'город',max_length=50)                                                              
     transport_company=models.CharField(verbose_name=u'транспортная компания',
-                                      # choices=list_transport_company(),
                                        max_length=1000)
     sum_price=models.FloatField(verbose_name=u'общая сумма заказа')
     num=models.IntegerField(verbose_name=u'количество заказанного товара')
