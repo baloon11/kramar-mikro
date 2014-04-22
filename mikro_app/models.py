@@ -16,7 +16,7 @@ def list_is_it_close():
                      (u'обработанный',u'обработанный') ]
     return is_it_close_list 
 
-
+"""
 def list_transport_company():
     list_name=list()    
     all_comp=Transport_Company.objects.count()
@@ -28,24 +28,8 @@ def list_transport_company():
     else:
         list_name.append( (u'свяжитесь с менеджером по поводу доставки',
                          u'свяжитесь с менеджером по поводу доставки') )
-        return list_name
-'''
-def list_lang():
-    list_name=list()
-    all_lang=Language.objects.count()
-    if all_lang>0:
-        for l in xrange(1,all_lang+1):
-            lang_abbr=Lang.objects.get(id=l).lang_abbr
-            list_name.append( (unicode(lang_abbr),unicode(lang_abbr)) ) 
-        return list_name
-    else:
-        list_name.append( (u'этот язык будет использован по умолчанию',
-                         u'этот язык будет использован по умолчанию') )
-        return list_name '''
+        return list_name"""
 
-'''
-def list_lang():
-    return((u'rus',u'rus'),(u'eng',u'eng'))'''
 
 def contact_is_it_close():
     is_it_close_list=[(u'не прочитано',u'не прочитано'),
@@ -55,11 +39,8 @@ def contact_is_it_close():
 
 class Tech_Info(models.Model):                           
     price=models.IntegerField(verbose_name=u'цена',default=0)
-    lang=models.CharField(verbose_name=u'двух(трех)буквенная аббревиатура языка',
-                          default=u'ru', 
-                          blank=True,
-                          unique=True,
-                          max_length=3)
+
+    lang=models.ForeignKey('Language',blank=True)
 
     unique=models.BooleanField(default=True,
                                     verbose_name=u'Товар продается в единичном экземпляре \
@@ -269,7 +250,7 @@ class Orders(models.Model):
     tel=models.CharField(verbose_name=u'телефон',max_length=20)
     city=models.CharField(verbose_name=u'город',max_length=50)                                                              
     transport_company=models.CharField(verbose_name=u'транспортная компания',
-                                       choices=list_transport_company(),
+                                      # choices=list_transport_company(),
                                        max_length=1000)
     sum_price=models.FloatField(verbose_name=u'общая сумма заказа')
     num=models.IntegerField(verbose_name=u'количество заказанного товара')
