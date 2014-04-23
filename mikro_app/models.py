@@ -3,26 +3,6 @@ from django.db import models
 from redactor.fields import RedactorField
 
 
-
-def list_payment_method():
-    payment_method_list=[(u'банковская карта',u'банковская карта'),
-                        (u'наложенный платеж',u'наложенный платеж') ]
-    return payment_method_list 
-
-
-def list_is_it_close():
-    is_it_close_list=[(u'новый заказ',u'новый заказ'),
-                      (u'в обработке',u'в обработке'),
-                     (u'обработанный',u'обработанный') ]
-    return is_it_close_list 
-
-
-def contact_is_it_close():
-    is_it_close_list=[(u'не прочитано',u'не прочитано'),
-                      (u'прочитано',u'прочитано') ]
-    return is_it_close_list 
-
-
 class Tech_Info(models.Model):                           
     price=models.IntegerField(verbose_name=u'цена',default=0)
 
@@ -241,16 +221,15 @@ class Orders(models.Model):
     num=models.IntegerField(verbose_name=u'количество заказанного товара')
 
     payment_method=models.CharField(verbose_name=u'Метод оплаты', 
-
                                     max_length=1000,
-                                    choices=list_payment_method())  
+                                
+                                    )  
     
     additional_information=RedactorField(
                               max_length=10000,
                               verbose_name=u'Дополнительная информация')
     
     is_it_close=models.CharField(verbose_name=u'статус заказа', 
-                                 choices=list_is_it_close(),
                                  max_length=100,
                                  default=u'новый заказ')
     
@@ -282,8 +261,7 @@ class Contact(models.Model):
     name = models.CharField(max_length=100, verbose_name=u'Имя',blank=True)
     email = models.EmailField(verbose_name=u'e-mail ',blank=True)
     text = models.TextField(verbose_name=u'Текст ')
-    is_it_close=models.CharField(verbose_name=u'Прочитано ли письмо', 
-                                 choices=contact_is_it_close(),
+    is_it_close=models.CharField(verbose_name=u'Прочитано ли письмо',
                                  max_length=100,
                                  default=u'Не прочитано')
 
