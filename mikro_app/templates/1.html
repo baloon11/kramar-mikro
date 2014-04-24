@@ -38,15 +38,15 @@
 <div class="navbar-inner"style="background: rgba(0, 0, 0, 0.6);">
 <div class="container" >
 <div class="brand">
-<a href="{% url 'start' %}">{{tech_info.logo}}</a>
+<a href="{% url 'start' lang=lang %}">{{tech_info.logo}}</a>
 </div>
 
 <div align="right" style="padding-top:5px" >
 <form class="form-inline">
 <a class="btn btn-inverse"
-href="{% url 'contacts' %}">{{tech_info.label_button_contacts}} </a>
+href="{% url 'contacts' lang=lang %}">{{tech_info.label_button_contacts}} </a>
 <a class="btn  btn-inverse"
-href="{% url 'shipping_and_payment' %}">{{tech_info.label_button_shipping_and_payment}} </a>
+href="{% url 'shipping_and_payment' lang=lang %}">{{tech_info.label_button_shipping_and_payment}} </a>
 </form>
 </div>
 

@@ -8,6 +8,14 @@
 {% endblock %}
 
 {% block center %}
+<div align="right">
+{%for language in all_languages%}
+<a class=" btn btn-inverse"
+href="{% url 'start' lang=language.lang_abbr %}">{{language.lang_abbr}} </a>
+
+{%endfor%}
+
+</div>
 
 {% if thanks_for_buying %}
 <div align="left"><h4>{{thanks_for_buying|safe}}</h4></div>
@@ -83,7 +91,7 @@
 
 {% if tech_info.unique == True %}
 <a class="btn  btn btn-inverse"
-href="{% url 'order_view' num=1 %}">{{tech_info.label_buy_button}} </a>
+href="{% url 'order_view' num=1 lang=lang %}">{{tech_info.label_buy_button}} </a>
 {% endif %}
 </div>
 <br>

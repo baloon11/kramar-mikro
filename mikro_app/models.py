@@ -285,9 +285,9 @@ class Static_Pages(models.Model):
         
 
 class Language(models.Model):
-    lang_abbr= models.CharField(u'двух(трех)буквенная аббревиатура языка', max_length=3) 
-    default=models.BooleanField(default=False,
-                                verbose_name=u'поставить этот язык по умолчанию для сайта')
+    lang_abbr= models.CharField(u'двух(трех)буквенная аббревиатура языка',max_length=3,unique=True) 
+    default=models.BooleanField(default=False,unique=True,
+                                verbose_name=u'язык по умолчанию')
                                     
     def __unicode__(self):
         if self.default==True:
