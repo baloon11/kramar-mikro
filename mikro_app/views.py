@@ -25,7 +25,7 @@ def start(request,lang=''):
     lang=lang_def(lang)
 
     if tech_info.unique==True:
-        return render_to_response('start.html',{'tech_info':tech_info,'lang':lang},context_instance=RequestContext(request) 
+        return render_to_response('start.html',{'tech_info':tech_info,'lang':lang,'view':'start'},context_instance=RequestContext(request) 
                                     )
     else:
         if request.method == 'POST':    
@@ -35,7 +35,7 @@ def start(request,lang=''):
                 return HttpResponseRedirect (reverse('order_view', kwargs={'num':fcd['num'],'lang':lang}))
         else:
             form=Homepage_Form()
-        return render_to_response('start.html',{'form':form,'lang':lang},
+        return render_to_response('start.html',{'form':form,'lang':lang,'view':'start'},
                                           context_instance=RequestContext(request) )
 
 def order_view(request,num=1,lang=''):
@@ -74,16 +74,21 @@ def order_view(request,num=1,lang=''):
             return render_to_response('start.html',{'thanks_for_buying':tech_info.thanks_for_buying,
                                                     'tech_info':tech_info,
                                                     'lang':lang,
+                                                    'view':'order_view',
                                                     'sum_price':s,'cod':cod,'form':form_homepage}, 
                                        context_instance=RequestContext(request) )               
     else:
         form=Orders_Form()
-    return render_to_response('order.html',{'form':form,'tech_info':tech_info,'lang':lang}, 
+    return render_to_response('order.html',{'form':form,
+                                            'tech_info':tech_info,
+                                             'lang':lang,
+                                             'num':num,
+                                             'view':'order_view'}, 
                                        context_instance=RequestContext(request) )
 
 def shipping_and_payment(request,lang=''):
     tech_info=lang_id(lang)
-    return render_to_response('shipping_and_payment.html',{'tech_info':tech_info,'lang':lang}, 
+    return render_to_response('shipping_and_payment.html',{'tech_info':tech_info,'lang':lang,'view':'shipping_and_payment'}, 
                               context_instance=RequestContext(request) )
 
 def contacts(request,lang=''):
@@ -109,11 +114,11 @@ def contacts(request,lang=''):
     else:
         form=Contacts()
     return render_to_response('contacts.html',{'form':form,'all_is_right': all_is_right,
-                                               'tech_info':tech_info,'lang':lang}, 
+                                               'tech_info':tech_info,'lang':lang,'view':'contacts'}, 
                                        context_instance=RequestContext(request) )
             
 def static_page(request,num,lang=''):
     tech_info=lang_id(lang)                                  
     return render_to_response('static_page.html',{'static_page':Static_Pages.objects.get(num=num),
-                                                  'tech_info':tech_info,'lang':lang},
+                                                  'tech_info':tech_info,'lang':lang, 'view':'static_page'},
                                                    context_instance=RequestContext(request))

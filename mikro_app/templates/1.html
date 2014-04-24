@@ -47,6 +47,18 @@
 href="{% url 'contacts' lang=lang %}">{{tech_info.label_button_contacts}} </a>
 <a class="btn  btn-inverse"
 href="{% url 'shipping_and_payment' lang=lang %}">{{tech_info.label_button_shipping_and_payment}} </a>
+
+{%for language in all_languages%}
+<a class=" btn btn-inverse"
+
+{% if view == "order_view" %}
+href="{% url view lang=language.lang_abbr num=num %}">{{language.lang_abbr}} </a>
+{%else%}
+href="{% url view lang=language.lang_abbr %}">{{language.lang_abbr}} </a>
+{% endif %}
+
+{%endfor%}
+
 </form>
 </div>
 

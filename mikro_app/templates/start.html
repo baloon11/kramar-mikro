@@ -9,11 +9,6 @@
 
 {% block center %}
 <div align="right">
-{%for language in all_languages%}
-<a class=" btn btn-inverse"
-href="{% url 'start' lang=language.lang_abbr %}">{{language.lang_abbr}} </a>
-
-{%endfor%}
 
 </div>
 
