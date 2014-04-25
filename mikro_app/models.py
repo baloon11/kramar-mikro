@@ -4,8 +4,6 @@ from redactor.fields import RedactorField
 
 
 class Tech_Info(models.Model):                           
-    price=models.IntegerField(verbose_name=u'цена',default=0)
-
     lang=models.ForeignKey('Language',blank=True)
 
     unique=models.BooleanField(default=True,
@@ -182,11 +180,11 @@ class Tech_Info(models.Model):
                                             default=u'текст на странице "Доставка и Оплата"')
 
     def __unicode__(self):
-        return u'техническая информация' 
+        return u'техническая информация для языка '+'%s' % self.lang.lang_abbr
 
     class Meta:
-        verbose_name_plural = "Раздел настрорек сайта" 
-        verbose_name = "\"техническая информация\""
+        verbose_name_plural = "Раздел настрорек для разных языков " 
+        
 
 
 class Transport_Company(models.Model):
@@ -297,6 +295,26 @@ class Language(models.Model):
         return '%s %s' % (self.lang_abbr,def_ault)
     class Meta:
         verbose_name_plural = "Языки"
+
+class Currency (models.Model):
+    curr_abbr= models.CharField(u'название валюты',max_length=100,unique=True) 
+    default=models.BooleanField(default=False,unique=True,
+                                verbose_name=u'валюта по умолчанию')
+    price=models.IntegerField(verbose_name=u'цена в этой валюте',default=0)
+
+                                    
+    def __unicode__(self):
+        if self.default==True:
+            def_ault=u'Эта валюта установлена по умолчанию'
+        else:
+            def_ault=u''
+        return '%s %s %s' % (self.curr_abbr,def_ault,price)
+    class Meta:
+        verbose_name_plural = "Валюты"
+
+
+
+
 
 
         
