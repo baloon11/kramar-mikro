@@ -86,7 +86,7 @@
 
 {% if tech_info.unique == True %}
 <a class="btn  btn btn-inverse"
-href="{% url 'order_view' num=1 lang=lang %}">{{tech_info.label_buy_button}} </a>
+href="{% url 'order_view' num=1 lang=lang  curr=curr %}">{{tech_info.label_buy_button}} </a>
 {% endif %}
 </div>
 <br>

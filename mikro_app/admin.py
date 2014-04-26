@@ -1,7 +1,7 @@
 # coding: utf-8
 from django.contrib import admin
 from django import forms
-from mikro_app.models import Tech_Info,Transport_Company,Orders,Static_Img,Contact,Static_Pages,Language 
+from mikro_app.models import Tech_Info,Transport_Company,Orders,Static_Img,Contact,Static_Pages,Language,Currency 
 
 label_transport_company=Tech_Info.objects.get(id=1).label_transport_company
 label_cod_or_bankcard=Tech_Info.objects.get(id=1).label_cod_or_bankcard
@@ -78,3 +78,4 @@ admin.site.register(Static_Img)
 admin.site.register(Contact,Contact_Admin)
 admin.site.register(Static_Pages)
 admin.site.register(Language,Lang_Admin)
+admin.site.register(Currency)

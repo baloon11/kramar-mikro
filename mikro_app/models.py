@@ -5,7 +5,7 @@ from redactor.fields import RedactorField
 
 class Tech_Info(models.Model):                           
     lang=models.ForeignKey('Language',blank=True)
-
+    price=models.IntegerField(verbose_name=u'цена',default=0)
     unique=models.BooleanField(default=True,
                                     verbose_name=u'Товар продается в единичном экземпляре \
                                     (галочка-да-в единичном)',
@@ -250,8 +250,9 @@ class Static_Img(models.Model):
         return self.title
     class Meta:
         ordering = ["num"]
+        verbose_name = "фото"
         verbose_name_plural = "Фотографии"
-        verbose_name = "photo"
+        
 
 class Contact(models.Model): 
     contact_subject = models.CharField(max_length=100, verbose_name=u'Тема письма ')
@@ -262,11 +263,11 @@ class Contact(models.Model):
     is_it_close=models.CharField(verbose_name=u'Прочитано ли письмо',
                                  max_length=100,
                                  default=u'Не прочитано')
-
+        
 
     class Meta: 
-        verbose_name = ('Contact')
-        verbose_name_plural = ('Contacts')
+        verbose_name = 'письмо'
+        verbose_name_plural = "Письма от покупателей"
         ordering = ["-date_time"]        
     def __unicode__(self): 
         return '%s %s %s' % (self.date_time,self.contact_subject,self.is_it_close)
@@ -300,7 +301,7 @@ class Currency (models.Model):
     curr_abbr= models.CharField(u'название валюты',max_length=100,unique=True) 
     default=models.BooleanField(default=False,unique=True,
                                 verbose_name=u'валюта по умолчанию')
-    price=models.IntegerField(verbose_name=u'цена в этой валюте',default=0)
+    curr_price=models.IntegerField(verbose_name=u'цена в этой валюте',default=0)
 
                                     
     def __unicode__(self):
@@ -308,7 +309,7 @@ class Currency (models.Model):
             def_ault=u'Эта валюта установлена по умолчанию'
         else:
             def_ault=u''
-        return '%s %s %s' % (self.curr_abbr,def_ault,price)
+        return '%s %s %s' % (def_ault,self.curr_price,self.curr_abbr)
     class Meta:
         verbose_name_plural = "Валюты"
 

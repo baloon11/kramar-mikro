@@ -38,26 +38,17 @@
 <div class="navbar-inner"style="background: rgba(0, 0, 0, 0.6);">
 <div class="container" >
 <div class="brand">
-<a href="{% url 'start' lang=lang %}">{{tech_info.logo}}</a>
+<a href="{% url 'start' lang=lang curr=curr %}">{{tech_info.logo}}</a>
 </div>
 
-<div align="right" style="padding-top:5px" >
+<div align="right" style="padding-top:5px">
+
 <form class="form-inline">
 <a class="btn btn-inverse"
-href="{% url 'contacts' lang=lang %}">{{tech_info.label_button_contacts}} </a>
+href="{% url 'contacts' lang=lang curr=curr %}">{{tech_info.label_button_contacts}} </a>
 <a class="btn  btn-inverse"
-href="{% url 'shipping_and_payment' lang=lang %}">{{tech_info.label_button_shipping_and_payment}} </a>
+href="{% url 'shipping_and_payment' lang=lang curr=curr %}">{{tech_info.label_button_shipping_and_payment}} </a>
 
-{%for language in all_languages%}
-<a class=" btn btn-inverse"
-
-{% if view == "order_view" %}
-href="{% url view lang=language.lang_abbr num=num %}">{{language.lang_abbr}} </a>
-{%else%}
-href="{% url view lang=language.lang_abbr %}">{{language.lang_abbr}} </a>
-{% endif %}
-
-{%endfor%}
 
 </form>
 </div>
@@ -65,6 +56,33 @@ href="{% url view lang=language.lang_abbr %}">{{language.lang_abbr}} </a>
 </div>
 
 </div>
+<div align="right" style="padding-right:50px;">
+
+{%for language in all_languages%}
+<a class=" btn btn-inverse"
+
+{% if view == "order_view" %}
+href="{% url view lang=language.lang_abbr num=num curr=curr %}">{{language.lang_abbr}} </a>
+{%else%}
+href="{% url view lang=language.lang_abbr curr=curr %}">{{language.lang_abbr}} </a>
+{% endif %}
+{%endfor%}
+
+
+{%for curr in all_currencies%}
+<a class=" btn btn-inverse"
+{% if view == "order_view" %}
+href="{% url view lang=lang num=num curr=curr %}">{{curr}} </a>
+{%else%}
+href="{% url view lang=lang curr=curr %}">{{curr}} </a>
+{% endif %}
+{%endfor%}
+
+
+
+
+ Currency: {{curr}}</div>
+
 </div>
 
 

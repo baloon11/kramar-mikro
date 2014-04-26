@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render_to_response
-from mikro_app.models import Tech_Info,Transport_Company,Orders,Contact,Static_Pages,Language
+from mikro_app.models import Tech_Info,Transport_Company,Orders,Contact,Static_Pages,Language,Currency
 from mikro_app.forms import Homepage_Form,Orders_Form,Contacts
 from django.template import RequestContext 
 from django.http import HttpResponseRedirect
@@ -19,26 +19,35 @@ def lang_def(lang):
         lang_abbr=lang
     return lang_abbr
 
+def curr_def(curr):
+    if curr=='':
+        curr_abbr=Currency.objects.get(default=True).curr_abbr
+    else:
+        curr_abbr=curr
+    return curr_abbr
 
-def start(request,lang=''): 
+
+
+def start(request,lang='',curr=''): 
     tech_info=lang_id(lang)
     lang=lang_def(lang)
+    curr=curr_def(curr)
 
     if tech_info.unique==True:
-        return render_to_response('start.html',{'tech_info':tech_info,'lang':lang,'view':'start'},context_instance=RequestContext(request) 
+        return render_to_response('start.html',{'tech_info':tech_info,'lang':lang,'curr':curr,'view':'start'},context_instance=RequestContext(request) 
                                     )
     else:
         if request.method == 'POST':    
             form=Homepage_Form(request.POST)
             if form.is_valid():
                 fcd = form.cleaned_data
-                return HttpResponseRedirect (reverse('order_view', kwargs={'num':fcd['num'],'lang':lang}))
+                return HttpResponseRedirect (reverse('order_view', kwargs={'num':fcd['num'],'lang':lang,'curr':curr}))
         else:
             form=Homepage_Form()
-        return render_to_response('start.html',{'form':form,'lang':lang,'view':'start'},
+        return render_to_response('start.html',{'form':form,'lang':lang,'curr':curr,'view':'start'},
                                           context_instance=RequestContext(request) )
 
-def order_view(request,num=1,lang=''):
+def order_view(request,num=1,lang='',curr=''):
     tech_info=lang_id(lang)
     num=int(num)
     if request.method == 'POST':    
@@ -74,6 +83,7 @@ def order_view(request,num=1,lang=''):
             return render_to_response('start.html',{'thanks_for_buying':tech_info.thanks_for_buying,
                                                     'tech_info':tech_info,
                                                     'lang':lang,
+                                                    'curr':curr,
                                                     'view':'order_view',
                                                     'sum_price':s,'cod':cod,'form':form_homepage}, 
                                        context_instance=RequestContext(request) )               
@@ -82,16 +92,21 @@ def order_view(request,num=1,lang=''):
     return render_to_response('order.html',{'form':form,
                                             'tech_info':tech_info,
                                              'lang':lang,
+                                             'curr':curr,
                                              'num':num,
                                              'view':'order_view'}, 
                                        context_instance=RequestContext(request) )
 
-def shipping_and_payment(request,lang=''):
+def shipping_and_payment(request,lang='',curr=''):
     tech_info=lang_id(lang)
-    return render_to_response('shipping_and_payment.html',{'tech_info':tech_info,'lang':lang,'view':'shipping_and_payment'}, 
+    return render_to_response('shipping_and_payment.html',
+                             {'tech_info':tech_info,
+                             'lang':lang,
+                             'curr':curr,
+                             'view':'shipping_and_payment'}, 
                               context_instance=RequestContext(request) )
 
-def contacts(request,lang=''):
+def contacts(request,lang='',curr=''):
     tech_info=lang_id(lang)
     all_is_right = ''
 
@@ -113,12 +128,19 @@ def contacts(request,lang=''):
             #                           context_instance=RequestContext(request) )
     else:
         form=Contacts()
-    return render_to_response('contacts.html',{'form':form,'all_is_right': all_is_right,
-                                               'tech_info':tech_info,'lang':lang,'view':'contacts'}, 
+    return render_to_response('contacts.html',{'form':form,
+                                               'all_is_right': all_is_right,
+                                               'tech_info':tech_info,
+                                               'lang':lang,
+                                               'curr':curr,
+                                               'view':'contacts'}, 
                                        context_instance=RequestContext(request) )
             
-def static_page(request,num,lang=''):
+def static_page(request,num,lang='',curr=''):
     tech_info=lang_id(lang)                                  
     return render_to_response('static_page.html',{'static_page':Static_Pages.objects.get(num=num),
-                                                  'tech_info':tech_info,'lang':lang, 'view':'static_page'},
+                                                  'tech_info':tech_info,
+                                                  'lang':lang,
+                                                  'curr':curr, 
+                                                  'view':'static_page'},
                                                    context_instance=RequestContext(request))
