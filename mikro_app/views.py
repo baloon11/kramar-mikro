@@ -45,7 +45,11 @@ def start(request,lang='',curr=''):
                                              kwargs={'num':fcd['num'],'lang':lang,'curr':curr}))
         else:
             form=Homepage_Form()
-        return render_to_response('start.html',{'form':form,'lang':lang,'curr':curr,'view':'start'},
+        return render_to_response('start.html',{'form':form,
+                                                'lang':lang,
+                                                'tech_info':tech_info,
+                                                'curr':curr,
+                                                'view':'start'},
                                           context_instance=RequestContext(request) )
 
 def order_view(request,num=1,lang='',curr=''):

@@ -107,8 +107,16 @@ class Tech_Info(models.Model):
 
     #logo_img=models.
     thanks_for_buying=models.CharField(verbose_name=u'Спасибо за покупку(надпись)',
-                          max_length=50,
-                          default=u'Спасибо за покупку')
+                                       max_length=50,
+                                       default=u'Спасибо за покупку')
+
+    label_sum=models.CharField(verbose_name=u'Сумма без учета доставки (надпись)',
+                               max_length=200,
+                               default=u'Сумма без учета доставки')
+    
+    label_curr=models.CharField(verbose_name=u'Валюта (надпись)',
+                               max_length=100,
+                               default=u'Валюта')
 
     email=models.EmailField(verbose_name=u'email магазина',default=u'email@ukr.net',blank=True)
     

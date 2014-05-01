@@ -47,7 +47,8 @@
 <a class="btn btn-inverse"
 href="{% url 'contacts' lang=lang curr=curr %}">{{tech_info.label_button_contacts}} </a>
 <a class="btn  btn-inverse"
-href="{% url 'shipping_and_payment' lang=lang curr=curr %}">{{tech_info.label_button_shipping_and_payment}} </a>
+href="{% url 'shipping_and_payment' lang=lang curr=curr %}">{{tech_info.label_button_shipping_and_payment}}
+</a>
 
 
 </form>
@@ -78,10 +79,7 @@ href="{% url view lang=lang curr=curr %}">{{curr}} </a>
 {% endif %}
 {%endfor%}
 
-
-
-
- Currency: {{curr}}</div>
+ {{tech_info.label_curr}}: {{curr}}</div>
 
 </div>
 
