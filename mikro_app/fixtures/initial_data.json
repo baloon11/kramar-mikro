@@ -11,6 +11,14 @@
 "fields": {"curr_abbr":"euro",
            "default":true,
            "curr_price":10}
+ },
+
+{"pk": 1, "model": "mikro_app.Country",
+"fields": {"country":"Ukraine"}
+},
+
+{"pk": 1, "model": "mikro_app.Transport_Company",
+"fields": {"name":"Nova Poshta"}
 }
 
 ]

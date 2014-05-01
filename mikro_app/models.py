@@ -1,11 +1,13 @@
 # coding: utf-8
 from django.db import models
 from redactor.fields import RedactorField
+from django.db.models.signals import post_init, post_save, post_delete
+from django.dispatch import receiver
+
 
 
 class Tech_Info(models.Model):                           
     lang=models.ForeignKey('Language',blank=True)
-    price=models.IntegerField(verbose_name=u'цена',default=0)
     unique=models.BooleanField(default=True,
                                     verbose_name=u'Товар продается в единичном экземпляре \
                                     (галочка-да-в единичном)',
@@ -190,16 +192,14 @@ class Tech_Info(models.Model):
 class Transport_Company(models.Model):
     name=models.CharField(verbose_name=u'Название транспортной компании',
                           max_length=50)
-    money=models.IntegerField(verbose_name=u'стоимость доставки(не наложенным платежем)',
-                              default=0)
     cod= models.BooleanField(default=True,
                                     verbose_name=u'осуществляет ли эта компания\
                                                    доставку наложенным платежем')
     
-    url_offices=models.URLField(verbose_name=u'ссылка на страницу со списком отделений')
+    url_offices=models.URLField(verbose_name=u'ссылка на страницу со списком отделений',blank=True)
     
     url_shipping_and_payment=models.URLField(verbose_name=u'ссылка на страницу c\
-                                                            условиями доставки и оплаты')
+                                                            условиями доставки и оплаты',blank=True)
     def __unicode__(self):
         return '%s' % self.name
 
@@ -216,6 +216,8 @@ class Orders(models.Model):
     transport_company=models.CharField(verbose_name=u'транспортная компания',
                                        max_length=1000)
     sum_price=models.FloatField(verbose_name=u'общая сумма заказа')
+    curr=models.CharField(verbose_name=u'Валюта',max_length=50,default=u'валюта')  
+    
     num=models.IntegerField(verbose_name=u'количество заказанного товара')
 
     payment_method=models.CharField(verbose_name=u'Метод оплаты', 
@@ -244,7 +246,7 @@ class Static_Img(models.Model):
     title = models.CharField(u'подпись к фото', max_length=1000) 
     num=models.IntegerField(verbose_name=u'Порядковый номер фото при выводе',default=1,unique=True)
 
-    start=models.ForeignKey(Tech_Info,verbose_name=u'Присоединение фото к разделу технической информации')
+    start=models.ManyToManyField(Tech_Info,verbose_name=u'Присоединение фото к разделу технической информации')
 
     def __unicode__(self):
         return self.title
@@ -313,9 +315,13 @@ class Currency (models.Model):
     class Meta:
         verbose_name_plural = "Валюты"
 
+class Country(models.Model):
+    country=models.CharField(u'Страна',max_length=200,unique=True)
 
-
-
+    def __unicode__(self):
+        return '%s ' % self.country
+    class Meta:
+        verbose_name_plural = "страны"
 
 
         

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render_to_response
-from mikro_app.models import Tech_Info,Transport_Company,Orders,Contact,Static_Pages,Language,Currency
+from mikro_app.models import Tech_Info,Transport_Company,Orders,Contact,Static_Pages,Language,Currency,Country
 from mikro_app.forms import Homepage_Form,Orders_Form,Contacts
 from django.template import RequestContext 
 from django.http import HttpResponseRedirect
@@ -41,7 +41,8 @@ def start(request,lang='',curr=''):
             form=Homepage_Form(request.POST)
             if form.is_valid():
                 fcd = form.cleaned_data
-                return HttpResponseRedirect (reverse('order_view', kwargs={'num':fcd['num'],'lang':lang,'curr':curr}))
+                return HttpResponseRedirect (reverse('order_view', 
+                                             kwargs={'num':fcd['num'],'lang':lang,'curr':curr}))
         else:
             form=Homepage_Form()
         return render_to_response('start.html',{'form':form,'lang':lang,'curr':curr,'view':'start'},
@@ -56,17 +57,12 @@ def order_view(request,num=1,lang='',curr=''):
             fcd = form.cleaned_data
 
             t_c=Transport_Company.objects.get(name=fcd['transport_company'])
-            price=Tech_Info.objects.get(id=1).price            
-            if fcd['cod_or_bankcard']==u'наложенный платеж':                     
-                s=num*price        
-                cod=True
-            else:
-                money=t_c.money 
-                s=num*price+money
-                cod=False
+            price=Currency.objects.get(curr_abbr=curr).curr_price                               
+            s=num*price        
             new_order= Orders (
                           num=num,
                           sum_price=s,
+                          curr=curr,
                           fio=fcd['fio'],
                           tel=fcd['tel'],
                           city=fcd['city'],
@@ -85,7 +81,7 @@ def order_view(request,num=1,lang='',curr=''):
                                                     'lang':lang,
                                                     'curr':curr,
                                                     'view':'order_view',
-                                                    'sum_price':s,'cod':cod,'form':form_homepage}, 
+                                                    'sum_price':s,'form':form_homepage}, 
                                        context_instance=RequestContext(request) )               
     else:
         form=Orders_Form()

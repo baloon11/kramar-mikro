@@ -1,7 +1,7 @@
 # coding: utf-8
 from django.contrib import admin
 from django import forms
-from mikro_app.models import Tech_Info,Transport_Company,Orders,Static_Img,Contact,Static_Pages,Language,Currency 
+from mikro_app.models import Tech_Info,Transport_Company,Orders,Static_Img,Contact,Static_Pages,Language,Currency,Country 
 
 label_transport_company=Tech_Info.objects.get(id=1).label_transport_company
 label_cod_or_bankcard=Tech_Info.objects.get(id=1).label_cod_or_bankcard
@@ -39,6 +39,16 @@ def contact_is_it_close():
 class Lang_Admin(admin.ModelAdmin):
     list_display=('lang_abbr','default')
     list_editable=('default',)
+
+class Currency_Admin(admin.ModelAdmin):
+    list_display=('curr_abbr','default','curr_price')
+    list_editable=('default','curr_price')
+
+class Currency_for_Transport_Company_Admin(admin.ModelAdmin):
+    list_display=('curr_abbr',)
+   # list_editable=('default','curr_price')
+
+
 
 
 class Orders_Admin_Form(forms.ModelForm):
@@ -78,4 +88,5 @@ admin.site.register(Static_Img)
 admin.site.register(Contact,Contact_Admin)
 admin.site.register(Static_Pages)
 admin.site.register(Language,Lang_Admin)
-admin.site.register(Currency)
+admin.site.register(Currency,Currency_Admin)
+admin.site.register(Country)

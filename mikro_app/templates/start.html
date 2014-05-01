@@ -14,13 +14,9 @@
 
 {% if thanks_for_buying %}
 <div align="left"><h4>{{thanks_for_buying|safe}}</h4></div>
-{% if cod %}
-<h4>Сумма без учета доставки(вы выбрали наложенный платеж) {{sum_price}} грн
+
+<h4>Сумма без учета доставки {{sum_price}} {{curr}}
 </h4>
-{%else%}
-<h4>Сумма c учетом доставки(вы выбрали оплату банковской картой) {{sum_price}} грн
-</h4>
-{%endif%}
 
 {%endif%}
 
