@@ -228,10 +228,6 @@ class Orders(models.Model):
     curr=models.CharField(verbose_name=u'Валюта',max_length=50,default=u'валюта')  
     
     num=models.IntegerField(verbose_name=u'количество заказанного товара')
-
-#    payment_method=models.CharField(verbose_name=u'Метод оплаты', 
-#                                    max_length=1000,
-#                                    )  
     
     additional_information=RedactorField(
                               max_length=10000,
@@ -325,6 +321,12 @@ class Currency (models.Model):
 
 class Country(models.Model):
     country=models.CharField(u'Страна',max_length=200,unique=True)
+    is_it_your_country=models.BooleanField(default=False,
+                                            verbose_name=u'осуществляестся ли в этой стране\
+                                                           пересылка наложенным платежем',
+                                            help_text='Если эта ваша страна проживания,то скорее всего,\
+                                                       внутри нее(через местные транспортные компании)\
+                                                       возможна пересылка наложенным платежем')
 
     def __unicode__(self):
         return '%s ' % self.country
@@ -333,8 +335,12 @@ class Country(models.Model):
 
 class PaymentMethod(models.Model):
     payment_method=models.CharField(verbose_name=u'Метод оплаты', 
-                                    max_length=1000)  
+                                    max_length=1000,default=u'Метод оплаты')  
 
+    def __unicode__(self):
+        return '%s ' % self.payment_method
+    class Meta:
+        verbose_name_plural = "Методы оплаты"
 
         
 

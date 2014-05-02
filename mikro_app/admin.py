@@ -1,7 +1,7 @@
 # coding: utf-8
 from django.contrib import admin
 from django import forms
-from mikro_app.models import Tech_Info,Transport_Company,Orders,Static_Img,Contact,Static_Pages,Language,Currency,Country 
+from mikro_app.models import Tech_Info,Transport_Company,Orders,Static_Img,Contact,Static_Pages,Language,Currency,Country,PaymentMethod 
 
 label_transport_company=Tech_Info.objects.get(id=1).label_transport_company
 label_cod_or_bankcard=Tech_Info.objects.get(id=1).label_cod_or_bankcard
@@ -18,11 +18,11 @@ def list_transport_company():
         list_name.append( (u'свяжитесь с менеджером по поводу доставки',
                          u'свяжитесь с менеджером по поводу доставки') )
         return list_name
-
+"""
 def list_payment_method():
     payment_method_list=[(u'банковская карта',u'банковская карта'),
                         (u'наложенный платеж',u'наложенный платеж') ]
-    return payment_method_list
+    return payment_method_list"""
 
 def list_is_it_close():
     is_it_close_list=[(u'новый заказ',u'новый заказ'),
@@ -48,6 +48,9 @@ class Currency_for_Transport_Company_Admin(admin.ModelAdmin):
     list_display=('curr_abbr',)
    # list_editable=('default','curr_price')
 
+class Country_Admin(admin.ModelAdmin):
+    list_display=('country','is_it_your_country',)
+    list_editable=('is_it_your_country',)
 
 
 
@@ -56,10 +59,10 @@ class Orders_Admin_Form(forms.ModelForm):
                                         choices=list_transport_company(), 
                                         label=label_transport_company 
                                         )  
-    payment_method=forms.ChoiceField(widget=forms.Select,#используем выпадающий список 
-                                        choices=list_payment_method(), 
-                                        label=label_cod_or_bankcard 
-                                        ) 
+#    payment_method=forms.ChoiceField(widget=forms.Select,#используем выпадающий список 
+#                                        choices=list_payment_method(), 
+#                                        label=label_cod_or_bankcard 
+#                                        ) 
     is_it_close=forms.ChoiceField(widget=forms.Select,#используем выпадающий список 
                                         choices=list_is_it_close(), 
                                         label=u"Cтатус заказа" 
@@ -89,4 +92,5 @@ admin.site.register(Contact,Contact_Admin)
 admin.site.register(Static_Pages)
 admin.site.register(Language,Lang_Admin)
 admin.site.register(Currency,Currency_Admin)
-admin.site.register(Country)
+admin.site.register(Country,Country_Admin)
+admin.site.register(PaymentMethod)
