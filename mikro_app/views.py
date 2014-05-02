@@ -54,6 +54,9 @@ def start(request,lang='',curr=''):
 
 def order_view(request,num=1,lang='',curr=''):
     tech_info=lang_id(lang)
+#    if num=='':
+ #       num=1
+ #   else:        
     num=int(num)
     if request.method == 'POST':    
         form=Orders_Form(request.POST)
@@ -82,9 +85,10 @@ def order_view(request,num=1,lang='',curr=''):
             form_homepage=Homepage_Form()
             return render_to_response('start.html',{'thanks_for_buying':tech_info.thanks_for_buying,
                                                     'tech_info':tech_info,
+                                                    'num':num,
                                                     'lang':lang,
                                                     'curr':curr,
-                                                    'view':'order_view',
+                                                    'view':'start',
                                                     'sum_price':s,'form':form_homepage}, 
                                        context_instance=RequestContext(request) )               
     else:

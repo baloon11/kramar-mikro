@@ -113,7 +113,6 @@ class Tech_Info(models.Model):
     label_sum=models.CharField(verbose_name=u'Сумма без учета доставки (надпись)',
                                max_length=200,
                                default=u'Сумма без учета доставки')
-    
     label_curr=models.CharField(verbose_name=u'Валюта (надпись)',
                                max_length=100,
                                default=u'Валюта')
@@ -208,8 +207,10 @@ class Transport_Company(models.Model):
     
     url_shipping_and_payment=models.URLField(verbose_name=u'ссылка на страницу c\
                                                             условиями доставки и оплаты',blank=True)
+
+
     def __unicode__(self):
-        return '%s' % self.name
+        return '%s' % (self.name)
 
     class Meta:
         verbose_name_plural = "Транспортные компании" 
@@ -311,7 +312,7 @@ class Currency (models.Model):
     curr_abbr= models.CharField(u'название валюты',max_length=100,unique=True) 
     default=models.BooleanField(default=False,unique=True,
                                 verbose_name=u'валюта по умолчанию')
-    curr_price=models.IntegerField(verbose_name=u'цена в этой валюте',default=0)
+    curr_price=models.FloatField(verbose_name=u'цена в этой валюте',default=0)
 
                                     
     def __unicode__(self):
