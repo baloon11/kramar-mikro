@@ -8,15 +8,57 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
+
+        # Changing field 'Currency.curr_price'
+        db.alter_column(u'mikro_app_currency', 'curr_price', self.gf('django.db.models.fields.FloatField')())
+        # Adding M2M table for field country on 'Transport_Company'
+        m2m_table_name = db.shorten_name(u'mikro_app_transport_company_country')
+        db.create_table(m2m_table_name, (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('transport_company', models.ForeignKey(orm[u'mikro_app.transport_company'], null=False)),
+            ('country', models.ForeignKey(orm[u'mikro_app.country'], null=False))
+        ))
+        db.create_unique(m2m_table_name, ['transport_company_id', 'country_id'])
+
+        # Adding field 'Orders.curr'
+        db.add_column(u'mikro_app_orders', 'curr',
+                      self.gf('django.db.models.fields.CharField')(default=u'\u0432\u0430\u043b\u044e\u0442\u0430', max_length=50),
+                      keep_default=False)
+
         # Deleting field 'Tech_Info.price'
         db.delete_column(u'mikro_app_tech_info', 'price')
 
+        # Adding field 'Tech_Info.label_sum'
+        db.add_column(u'mikro_app_tech_info', 'label_sum',
+                      self.gf('django.db.models.fields.CharField')(default=u'\u0421\u0443\u043c\u043c\u0430 \u0431\u0435\u0437 \u0443\u0447\u0435\u0442\u0430 \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0438', max_length=200),
+                      keep_default=False)
+
+        # Adding field 'Tech_Info.label_curr'
+        db.add_column(u'mikro_app_tech_info', 'label_curr',
+                      self.gf('django.db.models.fields.CharField')(default=u'\u0412\u0430\u043b\u044e\u0442\u0430', max_length=100),
+                      keep_default=False)
+
 
     def backwards(self, orm):
+
+        # Changing field 'Currency.curr_price'
+        db.alter_column(u'mikro_app_currency', 'curr_price', self.gf('django.db.models.fields.IntegerField')())
+        # Removing M2M table for field country on 'Transport_Company'
+        db.delete_table(db.shorten_name(u'mikro_app_transport_company_country'))
+
+        # Deleting field 'Orders.curr'
+        db.delete_column(u'mikro_app_orders', 'curr')
+
         # Adding field 'Tech_Info.price'
         db.add_column(u'mikro_app_tech_info', 'price',
                       self.gf('django.db.models.fields.IntegerField')(default=0),
                       keep_default=False)
+
+        # Deleting field 'Tech_Info.label_sum'
+        db.delete_column(u'mikro_app_tech_info', 'label_sum')
+
+        # Deleting field 'Tech_Info.label_curr'
+        db.delete_column(u'mikro_app_tech_info', 'label_curr')
 
 
     models = {
@@ -38,7 +80,7 @@ class Migration(SchemaMigration):
         u'mikro_app.currency': {
             'Meta': {'object_name': 'Currency'},
             'curr_abbr': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '100'}),
-            'curr_price': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'curr_price': ('django.db.models.fields.FloatField', [], {'default': '0'}),
             'default': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'unique': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
         },
@@ -52,6 +94,7 @@ class Migration(SchemaMigration):
             'Meta': {'ordering': "['-date_time']", 'object_name': 'Orders'},
             'additional_information': ('redactor.fields.RedactorField', [], {'max_length': '10000'}),
             'city': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
+            'curr': ('django.db.models.fields.CharField', [], {'default': "u'\\u0432\\u0430\\u043b\\u044e\\u0442\\u0430'", 'max_length': '50'}),
             'date_time': ('django.db.models.fields.DateField', [], {'auto_now': 'True', 'blank': 'True'}),
             'fio': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
@@ -105,7 +148,9 @@ class Migration(SchemaMigration):
             'label_contacts_name': ('django.db.models.fields.CharField', [], {'default': "u'\\u041f\\u0440\\u0435\\u0434\\u0441\\u0442\\u0432\\u0442\\u0435\\u0441\\u044c'", 'max_length': '100'}),
             'label_contacts_subject': ('django.db.models.fields.CharField', [], {'default': "u'\\u0422\\u0435\\u043c\\u0430'", 'max_length': '100'}),
             'label_contacts_text': ('django.db.models.fields.CharField', [], {'default': "u'\\u0422\\u0435\\u043a\\u0441\\u0442'", 'max_length': '10000'}),
+            'label_curr': ('django.db.models.fields.CharField', [], {'default': "u'\\u0412\\u0430\\u043b\\u044e\\u0442\\u0430'", 'max_length': '100'}),
             'label_fio': ('django.db.models.fields.CharField', [], {'default': "u'\\u0424\\u0418\\u041e'", 'max_length': '100'}),
+            'label_sum': ('django.db.models.fields.CharField', [], {'default': "u'\\u0421\\u0443\\u043c\\u043c\\u0430 \\u0431\\u0435\\u0437 \\u0443\\u0447\\u0435\\u0442\\u0430 \\u0434\\u043e\\u0441\\u0442\\u0430\\u0432\\u043a\\u0438'", 'max_length': '200'}),
             'label_tel': ('django.db.models.fields.CharField', [], {'default': "u'\\u0442\\u0435\\u043b\\u0435\\u0444\\u043e\\u043d'", 'max_length': '20'}),
             'label_transport_company': ('django.db.models.fields.CharField', [], {'default': "u'\\u0442\\u0440\\u0430\\u043d\\u0441\\u043f\\u043e\\u0440\\u0442\\u043d\\u0430\\u044f \\u043a\\u043e\\u043c\\u043f\\u0430\\u043d\\u0438\\u044f'", 'max_length': '1000'}),
             'label_url_offices': ('django.db.models.fields.CharField', [], {'default': "u'\\u041e\\u0444\\u0438\\u0441\\u044b'", 'max_length': '100'}),
@@ -127,6 +172,7 @@ class Migration(SchemaMigration):
         u'mikro_app.transport_company': {
             'Meta': {'object_name': 'Transport_Company'},
             'cod': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            'country': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['mikro_app.Country']", 'symmetrical': 'False'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
             'url_offices': ('django.db.models.fields.URLField', [], {'max_length': '200', 'blank': 'True'}),

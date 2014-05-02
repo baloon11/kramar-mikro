@@ -207,7 +207,7 @@ class Transport_Company(models.Model):
     
     url_shipping_and_payment=models.URLField(verbose_name=u'ссылка на страницу c\
                                                             условиями доставки и оплаты',blank=True)
-
+    country=models.ManyToManyField('Country') 
 
     def __unicode__(self):
         return '%s' % (self.name)
@@ -229,10 +229,9 @@ class Orders(models.Model):
     
     num=models.IntegerField(verbose_name=u'количество заказанного товара')
 
-    payment_method=models.CharField(verbose_name=u'Метод оплаты', 
-                                    max_length=1000,
-                                
-                                    )  
+#    payment_method=models.CharField(verbose_name=u'Метод оплаты', 
+#                                    max_length=1000,
+#                                    )  
     
     additional_information=RedactorField(
                               max_length=10000,
@@ -331,6 +330,13 @@ class Country(models.Model):
         return '%s ' % self.country
     class Meta:
         verbose_name_plural = "страны"
+
+class PaymentMethod(models.Model):
+    payment_method=models.CharField(verbose_name=u'Метод оплаты', 
+                                    max_length=1000)  
+
+
+        
 
 
         
