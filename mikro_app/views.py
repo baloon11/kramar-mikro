@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render_to_response
-from mikro_app.models import Tech_Info,Transport_Company,Orders,Contact,Static_Pages,Language,Currency,Country
-from mikro_app.forms import Homepage_Form,Orders_Form,Contacts
+from mikro_app.models import Tech_Info,Transport_Company,Orders,Contact,Static_Pages,Language,Currency,Country,PaymentMethod
+from mikro_app.forms import Homepage_Form,Homepage_Form_Unique,Orders_Form,Contacts
 from django.template import RequestContext 
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
@@ -34,15 +34,35 @@ def start(request,lang='',curr=''):
     curr=curr_def(curr)
 
     if tech_info.unique==True:
-        return render_to_response('start.html',{'tech_info':tech_info,'lang':lang,'curr':curr,'view':'start'},context_instance=RequestContext(request) 
-                                    )
+#        return render_to_response('start.html',{'tech_info':tech_info,'lang':lang,'curr':curr,'view':'start'},context_instance=RequestContext(request) )
+        if request.method == 'POST':    
+            form=Homepage_Form_Unique(request.POST)  # доробити тут
+            if form.is_valid():
+                fcd = form.cleaned_data
+                return HttpResponseRedirect (reverse('order_view', 
+                                             kwargs={'num':1,
+                                                     'lang':lang,
+                                                     'curr':curr,
+                                                     'country':fcd['country']}))
+        else:
+            form=Homepage_Form_Unique()
+        return render_to_response('start.html',{'form':form,
+                                                'lang':lang,
+                                                'tech_info':tech_info,
+                                                'curr':curr,
+                                                'view':'start'},
+                                          context_instance=RequestContext(request) )
+
     else:
         if request.method == 'POST':    
             form=Homepage_Form(request.POST)
             if form.is_valid():
                 fcd = form.cleaned_data
                 return HttpResponseRedirect (reverse('order_view', 
-                                             kwargs={'num':fcd['num'],'lang':lang,'curr':curr}))
+                                             kwargs={'num':fcd['num'],
+                                                     'lang':lang,
+                                                     'country':fcd['country'],
+                                                     'curr':curr}))
         else:
             form=Homepage_Form()
         return render_to_response('start.html',{'form':form,
@@ -52,7 +72,7 @@ def start(request,lang='',curr=''):
                                                 'view':'start'},
                                           context_instance=RequestContext(request) )
 
-def order_view(request,num=1,lang='',curr=''):
+def order_view(request,num=1,lang='',curr='',country=''):
     tech_info=lang_id(lang)
 #    if num=='':
  #       num=1
@@ -72,9 +92,10 @@ def order_view(request,num=1,lang='',curr=''):
                           curr=curr,
                           fio=fcd['fio'],
                           tel=fcd['tel'],
+                          country=Country.objects.get(country=country),
                           city=fcd['city'],
                           transport_company=fcd['transport_company'],
-                          payment_method=fcd['cod_or_bankcard'],
+                          payment_method=PaymentMethod.objects.get(payment_method=fcd['payment_method']),
                           additional_information=fcd['additional_information']
                         )
             new_order.save()
@@ -98,6 +119,7 @@ def order_view(request,num=1,lang='',curr=''):
                                              'lang':lang,
                                              'curr':curr,
                                              'num':num,
+                                             'country':country,
                                              'view':'order_view'}, 
                                        context_instance=RequestContext(request) )
 

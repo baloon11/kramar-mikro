@@ -4,7 +4,7 @@ from django import forms
 from mikro_app.models import Tech_Info,Transport_Company,Orders,Static_Img,Contact,Static_Pages,Language,Currency,Country,PaymentMethod 
 
 label_transport_company=Tech_Info.objects.get(id=1).label_transport_company
-label_cod_or_bankcard=Tech_Info.objects.get(id=1).label_cod_or_bankcard
+
 
 def list_transport_company():
     list_name=list()    

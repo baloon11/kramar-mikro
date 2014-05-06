@@ -63,7 +63,7 @@ href="{% url 'shipping_and_payment' lang=lang curr=curr %}">{{tech_info.label_bu
 <a class=" btn btn-inverse"
 
 {% if view == "order_view" %}
-href="{% url view lang=language.lang_abbr num=num curr=curr %}">{{language.lang_abbr}} </a>
+href="{% url view lang=language.lang_abbr num=num curr=curr country=country %}">{{language.lang_abbr}} </a>
 {%else%}
 href="{% url view lang=language.lang_abbr curr=curr %}">{{language.lang_abbr}} </a>
 {% endif %}
@@ -73,7 +73,7 @@ href="{% url view lang=language.lang_abbr curr=curr %}">{{language.lang_abbr}} <
 {%for curr in all_currencies%}
 <a class=" btn btn-inverse"
 {% if view == "order_view" %}
-href="{% url view lang=lang num=num curr=curr %}">{{curr}} </a>
+href="{% url view lang=lang num=num curr=curr country=country %}">{{curr}} </a>
 {%else%}
 href="{% url view lang=lang curr=curr %}">{{curr}} </a>
 {% endif %}

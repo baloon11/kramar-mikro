@@ -33,7 +33,7 @@ class Tech_Info(models.Model):
                                help_text='надпись слева от формы', 
                                default=u'транспортная компания')
 
-    label_cod_or_bankcard=models.CharField(verbose_name=u'наложенный платеж или перевод на банковскую карту',
+    label_payment_method=models.CharField(verbose_name=u'наложенный платеж или перевод на банковскую карту',
                                max_length=1000,
                                help_text=' надпись слева от формы',
                                default=u'способ оплаты')
@@ -48,7 +48,7 @@ class Tech_Info(models.Model):
                               help_text='надпись слева от формы',
                               default=u'дополнительная информация')
 
-    info_cod_or_bankcard=RedactorField(
+    info_payment_method=RedactorField(
                                verbose_name=u'доп. информация к способу оплаты',
                                max_length=1000,
                                help_text=' надпись снизу формы',
@@ -221,9 +221,11 @@ class Orders(models.Model):
     date_time = models.DateField(verbose_name=u'дата заказа',auto_now=True)      
     fio=models.CharField(verbose_name=u'ФИО',max_length=100) 
     tel=models.CharField(verbose_name=u'телефон',max_length=20)
+    country=models.ForeignKey('Country',verbose_name=u'Страна')
     city=models.CharField(verbose_name=u'город',max_length=50)                                                              
     transport_company=models.CharField(verbose_name=u'транспортная компания',
                                        max_length=1000)
+    payment_method=models.ForeignKey('PaymentMethod',verbose_name=u'метод оплаты')
     sum_price=models.FloatField(verbose_name=u'общая сумма заказа')
     curr=models.CharField(verbose_name=u'Валюта',max_length=50,default=u'валюта')  
     
@@ -335,7 +337,7 @@ class Country(models.Model):
 
 class PaymentMethod(models.Model):
     payment_method=models.CharField(verbose_name=u'Метод оплаты', 
-                                    max_length=1000,default=u'Метод оплаты')  
+                                    max_length=1000,default=u'Метод оплаты',unique=True)  
 
     def __unicode__(self):
         return '%s ' % self.payment_method
