@@ -4,6 +4,7 @@
 {% endblock %}
 
 {% block center %}
+
 <div align="center">
 
 <div class="row">
@@ -43,22 +44,58 @@
 
 <div class="span3">
 <div class="transport_compamy">
-{%for transport_company in transport_company_context%}
+<h4>{{country}}</h4>
+{%for transport_company in transport_company_filter_country%}
 {{transport_company.name}}<br>
 <a href="{{transport_company.url_offices}}">{{tech_info.label_url_offices}}</a><br>
 <a href="{{transport_company.url_shipping_and_payment}}">{{tech_info.label_url_shipping_and_payment}}</a><br>
-{%if transport_company.cod %}
-{{tech_info.cod_is_possible|safe}}
 <br>
-Пересылка( не наложенным платежем) {{transport_company.money}}грн
-{%else%}
-{{tech_info.cod_is_impossible|safe}}
-<br>
-Пересылка( не наложенным платежем) {{transport_company.money}}грн
-{%endif%}
-<br>
-<br>
+
 {%endfor%}
+<br>
+
+
+
+<a href="#myModal" role="button" class="btn btn-inverse" data-toggle="modal">all transport companies</a>  
+
+ 
+<div id="myModal" class="modal hide fade" style="color:black;" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" 
+aria-hidden="true"> 
+
+  <div class="modal-header">  
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>  
+    <h3 id="myModalLabel">All Transport Companies</h3>  
+  </div>  
+  <div class="modal-body"> 
+
+{%for transport_company in transport_company_all%}
+{{transport_company.name}}<br>
+
+{%for country_ins in transport_company.country.all%} 
+{{country_ins.country}}
+{%if forloop.last == False%}
+,
+{%else%}
+
+{%endif%}
+
+{%endfor%}
+<br>
+<a href="{{transport_company.url_offices}}">{{tech_info.label_url_offices}}</a><br>
+<a href="{{transport_company.url_shipping_and_payment}}">{{tech_info.label_url_shipping_and_payment}}</a><br>
+<br>
+
+{%endfor%}
+
+  </div>  
+  <div class="modal-footer">  
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>  
+   
+  </div>  
+</div> 
+
+
+
 </div>
 </div>
 </div>

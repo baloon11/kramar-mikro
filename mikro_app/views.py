@@ -26,6 +26,19 @@ def curr_def(curr):
         curr_abbr=curr
     return curr_abbr
 
+def country_transport_company():
+    list_coutries=list()
+    list_t_c=list()
+    for country in Country.objects.all():
+        #list_t_c.append(country.country)
+        for set_all in country.transport_company_set.all():
+            list_t_c.append(set_all)
+        list_coutries.append(list_t_c)
+        list_t_c=list()
+    return list_coutries
+
+
+
 
 
 def start(request,lang='',curr=''): 
@@ -34,9 +47,8 @@ def start(request,lang='',curr=''):
     curr=curr_def(curr)
 
     if tech_info.unique==True:
-#        return render_to_response('start.html',{'tech_info':tech_info,'lang':lang,'curr':curr,'view':'start'},context_instance=RequestContext(request) )
         if request.method == 'POST':    
-            form=Homepage_Form_Unique(request.POST)  # доробити тут
+            form=Homepage_Form_Unique(request.POST)
             if form.is_valid():
                 fcd = form.cleaned_data
                 return HttpResponseRedirect (reverse('order_view', 
@@ -113,12 +125,14 @@ def order_view(request,num=1,lang='',curr='',country=''):
                                                     'sum_price':s,'form':form_homepage}, 
                                        context_instance=RequestContext(request) )               
     else:
-        form=Orders_Form()
+        form=Orders_Form()      
     return render_to_response('order.html',{'form':form,
                                             'tech_info':tech_info,
                                              'lang':lang,
                                              'curr':curr,
                                              'num':num,
+                                             'transport_company_filter_country':Transport_Company.objects.filter(country__country=country),
+                                             'transport_company_all':Transport_Company.objects.all(),
                                              'country':country,
                                              'view':'order_view'}, 
                                        context_instance=RequestContext(request) )
