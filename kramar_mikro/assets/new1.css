@@ -24,3 +24,8 @@ A:active{color:#BBB395; }
 
 A:hover{color:#CDC8B1;}
 
+.align{
+padding-top:5px; 
+text-align:center; 
+vertical-align:top;}
+

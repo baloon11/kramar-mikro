@@ -40,13 +40,33 @@
 
 <form action="" method="post">  {% csrf_token %}
 <table>
-{{form}}
+
+<tr>    
+<td class="align">{{tech_info.label_contacts_name}}</td> <td>{{form.name}}</td>
+</tr>
+
+<tr>    
+<td class="align">{{tech_info.label_contacts_email}}</td> <td>{{form.email}}</td>
+</tr>
+
+<tr>    
+<td class="align">{{tech_info.label_contacts_subject}}</td> <td>{{form.contact_subject}}</td>
+</tr>
+
+<tr>    
+<td style="text-align: center;">{{tech_info.label_contacts_text}}</td> <td>{{form.text}}</td>
+</tr>
+
+<tr>    
+<td></td> 
+
+<td style="text-align: center;">
+<input type="submit"  class="btn btn-inverse" 
+value="{{tech_info.label_button_contacts_in_page}}">	
+</td>
+</tr>
 </table>
 
-<div style=" padding-left: 90px ">
-<input type="submit"  class="btn btn-inverse" 
-value="{{tech_info.label_button_contacts_in_page}}">
-</div>
 </form>
 </div>
 

@@ -96,10 +96,10 @@ class Orders_Form(forms.Form):
 #   pass
 
 class Contacts (forms.Form):
-    contact_subject=forms.CharField(label=label_contacts_subject,max_length=100)
-    name=forms.CharField(label=label_contacts_name,max_length=100)
-    email=forms.EmailField(label=label_contacts_email)
-    text=forms.CharField(label=label_contacts_text,max_length=10000,
+    contact_subject=forms.CharField(max_length=100)
+    name=forms.CharField(max_length=100)
+    email=forms.EmailField()
+    text=forms.CharField(max_length=10000,
                          widget=forms.Textarea(attrs={'cols': 60, 'rows':10}) )
 
 
