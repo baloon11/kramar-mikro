@@ -48,6 +48,11 @@
 <div align="right" style="padding-top:5px">
 
 <form class="form-inline">
+{% for  static_page in static_pages %}
+<a class="btn btn-inverse"
+href="{% url 'static_page' lang=lang curr=curr num=static_page.num %}">{{static_page.title}}</a>
+{%endfor%}
+
 <a class="btn btn-inverse"
 href="{% url 'contacts' lang=lang curr=curr %}">{{tech_info.label_button_contacts}} </a>
 <a class="btn  btn-inverse"
@@ -68,6 +73,10 @@ href="{% url 'shipping_and_payment' lang=lang curr=curr %}">{{tech_info.label_bu
 
 {% if view == "order_view" %}
 href="{% url view lang=language.lang_abbr num=num curr=curr country=country %}">{{language.lang_abbr}} </a>
+
+{% elif view == "static_page" %}
+href="{% url view lang=lang num=static_page.num curr=curr %}">{{curr}} </a>
+
 {%else%}
 href="{% url view lang=language.lang_abbr curr=curr %}">{{language.lang_abbr}} </a>
 {% endif %}
@@ -78,9 +87,14 @@ href="{% url view lang=language.lang_abbr curr=curr %}">{{language.lang_abbr}} <
 <a class=" btn btn-inverse"
 {% if view == "order_view" %}
 href="{% url view lang=lang num=num curr=curr country=country %}">{{curr}} </a>
+
+{% elif view == "static_page" %}
+href="{% url view lang=lang num=static_page.num curr=curr %}">{{curr}} </a>
+
 {%else%}
 href="{% url view lang=lang curr=curr %}">{{curr}} </a>
 {% endif %}
+
 {%endfor%}
 
  {{tech_info.label_curr}}: {{curr}}</div>

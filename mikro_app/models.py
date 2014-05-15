@@ -257,7 +257,7 @@ class Static_Img(models.Model):
     def __unicode__(self):
         return self.title
     class Meta:
-        ordering = ["num"]
+        ordering = ['num']
         verbose_name = "фото"
         verbose_name_plural = "Фотографии"
         
@@ -281,7 +281,7 @@ class Contact(models.Model):
         return '%s %s %s' % (self.date_time,self.contact_subject,self.is_it_close)
 
 class Static_Pages(models.Model):
-    title = models.CharField(u'Title', max_length=1000) 
+    title = models.CharField(u'Title', max_length=1000,blank=True) 
     text = RedactorField(verbose_name=u'Текст на странице',default=u'This page is under construction')
     num=models.IntegerField(verbose_name=u'Порядковый номер страницы в списке',unique=True)
     def __unicode__(self):
