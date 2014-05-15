@@ -124,7 +124,7 @@ TEMPLATE_DIRS = (
 INSTALLED_APPS = (
     'mikro_app',
     'redactor', 
-    'south',   
+   # 'south',   
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',

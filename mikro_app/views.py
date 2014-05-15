@@ -8,10 +8,18 @@ from django.core.urlresolvers import reverse
 
 
 def lang_id(lang):
-    if lang == '':
+    def_lang=Language.objects.filter(default=True)
+    if def_lang.count()==1:
+
+        if lang == '':# для першої сторінки
+            one_lang_abbr=Language.objects.get(default=True).lang_abbr
+            tech_info = Tech_Info.objects.get(lang__lang_abbr=one_lang_abbr)
+        else:
+            tech_info = Tech_Info.objects.get(lang__lang_abbr=lang)# для всіх інших
+
+    if def_lang.count()==0:#  якщо мова за замовчуванням не задана 
         tech_info = Tech_Info.objects.get(id=1)
-    else:
-        tech_info = Tech_Info.objects.get(lang__lang_abbr=lang)
+
     return tech_info
 
 

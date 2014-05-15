@@ -35,10 +35,20 @@ def contact_is_it_close():
                       (u'прочитано',u'прочитано') ]
     return is_it_close_list 
 
+class LangAdminForm(forms.ModelForm):
+    model = Language
+
+    def clean_default(self):
+
+        if self.cleaned_data['default'] == True and Language.objects.filter(default=self.cleaned_data['default']).count() == 1:
+            raise forms.ValidationError(u'Язык по умолчанию уже выставлен')
+        return self.cleaned_data['default']
+
 
 class Lang_Admin(admin.ModelAdmin):
-    list_display=('lang_abbr','default')
-    list_editable=('default',)
+    list_display = ('lang_abbr', 'default')
+    form = LangAdminForm
+
 
 class Currency_Admin(admin.ModelAdmin):
     list_display=('curr_abbr','default','curr_price')
