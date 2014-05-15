@@ -8,16 +8,17 @@ from django.core.urlresolvers import reverse
 
 
 def lang_id(lang):
-    def_lang=Language.objects.filter(default=True)
-    if def_lang.count()==1:
+    def_lang = Language.objects.filter(default=True)
+    if def_lang.count() == 1:
 
-        if lang == '':# для першої сторінки
-            one_lang_abbr=Language.objects.get(default=True).lang_abbr
+        if lang == '':  # для першої сторінки
+            one_lang_abbr = Language.objects.get(default=True).lang_abbr
             tech_info = Tech_Info.objects.get(lang__lang_abbr=one_lang_abbr)
         else:
-            tech_info = Tech_Info.objects.get(lang__lang_abbr=lang)# для всіх інших
+            # для всіх інших
+            tech_info = Tech_Info.objects.get(lang__lang_abbr=lang)
 
-    if def_lang.count()==0:#  якщо мова за замовчуванням не задана 
+    if def_lang.count() == 0:  # якщо мова за замовчуванням не задана
         tech_info = Tech_Info.objects.get(id=1)
 
     return tech_info
@@ -31,18 +32,9 @@ def lang_def(lang):
     return lang_abbr
 
 
-def curr_def(curr):
-    if curr == '':
-        curr_abbr = Currency.objects.get(default=True).curr_abbr
-    else:
-        curr_abbr = curr
-    return curr_abbr
-
-
 def start(request, lang='', curr=''):
     tech_info = lang_id(lang)
     lang = lang_def(lang)
-    curr = curr_def(curr)
 
     if tech_info.unique == True:
         if request.method == 'POST':
@@ -85,9 +77,6 @@ def start(request, lang='', curr=''):
 
 def order_view(request, num=1, lang='', curr='', country=''):
     tech_info = lang_id(lang)
-#    if num=='':
- #       num=1
- #   else:
     num = int(num)
     if request.method == 'POST':
         form = Orders_Form(request.POST)

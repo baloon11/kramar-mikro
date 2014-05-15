@@ -307,7 +307,7 @@ class Language(models.Model):
 
 class Currency (models.Model):
     curr_abbr= models.CharField(u'название валюты',max_length=100,unique=True) 
-    default=models.BooleanField(default=False,unique=True,
+    default=models.BooleanField(default=False,
                                 verbose_name=u'валюта по умолчанию')
     curr_price=models.FloatField(verbose_name=u'цена в этой валюте',default=0)
 
