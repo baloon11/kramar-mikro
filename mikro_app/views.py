@@ -94,9 +94,8 @@ def order_view(request, num=1, lang='', curr='', country=''):
                 tel=fcd['tel'],
                 country=Country.objects.get(country=country),
                 city=fcd['city'],
-                transport_company=fcd['transport_company'],
-                payment_method=PaymentMethod.objects.get(
-                    payment_method=fcd['payment_method']),
+                transport_company=fcd['payment_method'],     
+                payment_method=PaymentMethod.objects.get(payment_method=fcd['payment_method']),
                 additional_information=fcd['additional_information']
             )
             new_order.save()
@@ -107,6 +106,7 @@ def order_view(request, num=1, lang='', curr='', country=''):
             form_homepage = Homepage_Form()
             return render_to_response(
                 'start.html', {'thanks_for_buying': tech_info.thanks_for_buying,
+                               'payment_method':fcd['payment_method'],
                                'tech_info': tech_info,
                                'num': num,
                                'lang': lang,

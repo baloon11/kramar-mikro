@@ -15,13 +15,14 @@
 {% if thanks_for_buying %}
 <div align="left"><h4>{{thanks_for_buying|safe}}</h4></div>
 
-<h4>{{tech_info.label_sum}} {{sum_price}} {{curr}}
+<h4>{{tech_info.label_sum}} {{sum_price}} {{curr}} ({{payment_method}})
 </h4>
 
 {%endif%}
 
 {% if  contacts_thanks%}
 <div align="left"><h4>{{contacts_thanks|safe}}</h4> </div>
+
 
 {%endif%}
 <br>
