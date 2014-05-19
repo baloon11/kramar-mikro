@@ -18,7 +18,7 @@ urlpatterns = patterns('',
         ),
 
     url(r'^lang/(?P<lang>\w+)/curr/(?P<curr>\w+)/$','mikro_app.views.start',name='start'), 
-    url(r'^order/(?P<num>\d*)/lang/(?P<lang>\w+)/curr/(?P<curr>\w+)/country/(?P<country>\w*)/$','mikro_app.views.order_view',name='order_view'), 
+    url(r'^order/(?P<num>\d*)/lang/(?P<lang>\w+)/curr/(?P<curr>\w+)/country/(?P<country>.*)/$','mikro_app.views.order_view',name='order_view'), 
    # url(r'^order/$','mikro_app.views.order_view',name='order_view'), 
 
 

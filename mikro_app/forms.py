@@ -62,8 +62,9 @@ class Orders_Form(forms.ModelForm):
                   'payment_method', 'additional_information')
 
     def __init__(self, *args, **kwargs):
+        country_ins=kwargs.pop('country', None)
         super(Orders_Form, self).__init__(*args, **kwargs)
-        self.fields['transport_company'].queryset = Transport_Company.objects.all()
+        self.fields['transport_company'].queryset = Transport_Company.objects.filter(country__country=country_ins)
 
 
 class Contacts (forms.Form):

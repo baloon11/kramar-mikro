@@ -79,7 +79,7 @@ def order_view(request, num=1, lang='', curr='', country=''):
     tech_info = lang_id(lang)
     num = int(num)
     if request.method == 'POST':
-        form = Orders_Form(request.POST)
+        form = Orders_Form(request.POST,country=country)
         if form.is_valid():
             fcd = form.cleaned_data
 
@@ -115,7 +115,7 @@ def order_view(request, num=1, lang='', curr='', country=''):
                                'sum_price': s, 'form': form_homepage},
                 context_instance=RequestContext(request))
     else:
-        form = Orders_Form()
+        form = Orders_Form(country=country)
     return render_to_response('order.html', {'form': form,
                                              'tech_info': tech_info,
                                              'lang': lang,
