@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django import forms
-from mikro_app.models import Tech_Info, Transport_Company, Country, PaymentMethod
+from mikro_app.models import Tech_Info, Transport_Company, Country, PaymentMethod, Orders
 #from django.contrib.auth.models import User
 from django.forms.widgets import Input
 
@@ -49,22 +49,21 @@ class Homepage_Form_Unique(forms.Form):
     country = forms.ChoiceField(widget=forms.Select, choices=all_countries())
 
 
-class Orders_Form(forms.Form):
-    fio = forms.CharField(max_length=100)
-    tel = forms.CharField(max_length=20)
-    city = forms.CharField(max_length=100)
-    transport_company = forms.ChoiceField(widget=forms.Select,  # используем выпадающий список
-                                          choices=list_transport_company()
-                                          )
-
-    payment_method = forms.ChoiceField(widget=forms.Select,  # используем выпадающий список
-                                       choices=list_payment_method()
-                                       )
+class Orders_Form(forms.ModelForm):
 
     additional_information = forms.CharField(max_length=10000,
                                              widget=forms.Textarea(
                                                  attrs={'cols': 60, 'rows': 8})
                                              )
+
+    class Meta:
+        model = Orders
+        fields = ('fio', 'tel', 'city', 'transport_company',
+                  'payment_method', 'additional_information')
+
+    def __init__(self, *args, **kwargs):
+        super(Orders_Form, self).__init__(*args, **kwargs)
+        self.fields['transport_company'].queryset = Transport_Company.objects.all()
 
 
 class Contacts (forms.Form):

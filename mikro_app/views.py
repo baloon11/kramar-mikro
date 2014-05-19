@@ -94,8 +94,8 @@ def order_view(request, num=1, lang='', curr='', country=''):
                 tel=fcd['tel'],
                 country=Country.objects.get(country=country),
                 city=fcd['city'],
-                transport_company=fcd['payment_method'],     
-                payment_method=PaymentMethod.objects.get(payment_method=fcd['payment_method']),
+                transport_company = fcd['transport_company'],     
+                payment_method=fcd['payment_method'],
                 additional_information=fcd['additional_information']
             )
             new_order.save()

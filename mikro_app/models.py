@@ -223,8 +223,7 @@ class Orders(models.Model):
     tel=models.CharField(verbose_name=u'телефон',max_length=20)
     country=models.ForeignKey('Country',verbose_name=u'Страна')
     city=models.CharField(verbose_name=u'город',max_length=50)                                                              
-    transport_company=models.CharField(verbose_name=u'транспортная компания',
-                                       max_length=1000)
+    transport_company=models.ForeignKey(Transport_Company,verbose_name=u'транспортная компания',max_length=1000)
     payment_method=models.ForeignKey('PaymentMethod',verbose_name=u'метод оплаты')
     sum_price=models.FloatField(verbose_name=u'общая сумма заказа')
     curr=models.CharField(verbose_name=u'Валюта',max_length=50,default=u'валюта')  
