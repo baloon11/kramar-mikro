@@ -33,7 +33,7 @@ class Tech_Info(models.Model):
                                help_text='надпись слева от формы', 
                                default=u'транспортная компания')
 
-    label_payment_method=models.CharField(verbose_name=u'наложенный платеж или перевод на банковскую карту',
+    label_payment_method=models.CharField(verbose_name=u'способ оплаты',
                                max_length=1000,
                                help_text=' надпись слева от формы',
                                default=u'способ оплаты')
@@ -80,7 +80,10 @@ class Tech_Info(models.Model):
     label_url_shipping_and_payment=models.CharField(verbose_name=u'Как отображается ссылка на страницу с условиями оплаты и доставка перевозчика',
                                           max_length=100,
                                           default=u'Условия оплаты и доставки')
-
+    cod_text =models.CharField(verbose_name=u'наложенный платеж',
+                                          max_length=100,
+                                          help_text=u'надпись в выпадающем меню в форме заказа',
+                                          default=u'наложенный платеж')
     cod_is_possible=RedactorField(verbose_name=u'Возможна оплата наложенным платежем',
                                      max_length=1000,
                                      help_text=u'Колонка со всеми возможными перевозчиками.\
@@ -224,7 +227,7 @@ class Orders(models.Model):
     country=models.ForeignKey('Country',verbose_name=u'Страна')
     city=models.CharField(verbose_name=u'город',max_length=50)                                                              
     transport_company=models.ForeignKey(Transport_Company,verbose_name=u'транспортная компания',max_length=1000)
-    payment_method=models.ForeignKey('PaymentMethod',verbose_name=u'метод оплаты')
+    payment_method=models.CharField(verbose_name=u'метод оплаты',max_length=1000)
     sum_price=models.FloatField(verbose_name=u'общая сумма заказа')
     curr=models.CharField(verbose_name=u'Валюта',max_length=50,default=u'валюта')  
     

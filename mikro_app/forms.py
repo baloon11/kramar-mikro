@@ -30,9 +30,20 @@ def all_countries():
             (unicode(country_ins.country), unicode(country_ins.country)))
     return all_countries
 
-
-def list_payment_method():
+def list_payment_method(): 
     all_payment_methods = list()
+    for payment_method_ins in PaymentMethod.objects.all():
+        all_payment_methods.append((unicode(payment_method_ins.payment_method),
+                                    unicode(payment_method_ins.payment_method))
+                                   )
+    return all_payment_methods
+
+
+
+def list_payment_method_my_country(lang):
+    text = Tech_Info.objects.get(lang__lang_abbr=lang)
+    all_payment_methods = list()
+    all_payment_methods.append((text.cod_text, text.cod_text))
     for payment_method_ins in PaymentMethod.objects.all():
         all_payment_methods.append((unicode(payment_method_ins.payment_method),
                                     unicode(payment_method_ins.payment_method))
@@ -55,6 +66,7 @@ class Orders_Form(forms.ModelForm):
                                              widget=forms.Textarea(
                                                  attrs={'cols': 60, 'rows': 8})
                                              )
+    payment_method = forms.ChoiceField(widget=forms.Select)                                        
 
     class Meta:
         model = Orders
@@ -62,9 +74,31 @@ class Orders_Form(forms.ModelForm):
                   'payment_method', 'additional_information')
 
     def __init__(self, *args, **kwargs):
-        country_ins=kwargs.pop('country', None)
+        country_ins = kwargs.pop('country', None)
         super(Orders_Form, self).__init__(*args, **kwargs)
         self.fields['transport_company'].queryset = Transport_Company.objects.filter(country__country=country_ins)
+        self.fields['payment_method'].choices = list_payment_method()
+
+class Orders_Form_My_Country(forms.ModelForm):
+
+    additional_information = forms.CharField(max_length=10000,
+                                             widget=forms.Textarea(
+                                                 attrs={'cols': 60, 'rows': 8})
+                                             )
+
+    payment_method = forms.ChoiceField(widget=forms.Select)
+
+    class Meta:
+        model = Orders
+        fields = ('fio', 'tel', 'city', 'transport_company',
+                  'payment_method', 'additional_information')
+
+    def __init__(self, *args, **kwargs):
+        country = kwargs.pop('country', None)
+        lang = kwargs.pop('lang', None)
+        super(Orders_Form_My_Country, self).__init__(*args, **kwargs)
+        self.fields['transport_company'].queryset = Transport_Company.objects.filter(country__country=country)
+        self.fields['payment_method'].choices = list_payment_method_my_country(lang)
 
 
 class Contacts (forms.Form):

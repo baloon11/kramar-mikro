@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render_to_response
 from mikro_app.models import Tech_Info, Transport_Company, Orders, Contact, Static_Pages, Language, Currency, Country, PaymentMethod
-from mikro_app.forms import Homepage_Form, Homepage_Form_Unique, Orders_Form, Contacts
+from mikro_app.forms import Homepage_Form, Homepage_Form_Unique, Orders_Form,Orders_Form_My_Country, Contacts
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
@@ -79,7 +79,10 @@ def order_view(request, num=1, lang='', curr='', country=''):
     tech_info = lang_id(lang)
     num = int(num)
     if request.method == 'POST':
-        form = Orders_Form(request.POST,country=country)
+        if Country.objects.get(country=country).is_it_your_country==True:
+            form = Orders_Form_My_Country(request.POST,lang=lang,country=country)
+        else:
+            form = Orders_Form(request.POST,country=country)
         if form.is_valid():
             fcd = form.cleaned_data
 
@@ -115,7 +118,11 @@ def order_view(request, num=1, lang='', curr='', country=''):
                                'sum_price': s, 'form': form_homepage},
                 context_instance=RequestContext(request))
     else:
-        form = Orders_Form(country=country)
+        if Country.objects.get(country=country).is_it_your_country==True:
+            form = Orders_Form_My_Country(lang=lang,country=country)
+        else:
+            form = Orders_Form(country=country)
+
     return render_to_response('order.html', {'form': form,
                                              'tech_info': tech_info,
                                              'lang': lang,
