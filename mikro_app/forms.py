@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django import forms
-from mikro_app.models import Tech_Info, Transport_Company, Country, PaymentMethod, Orders
+from mikro_app.models import Tech_Info, Transport_Company, Country, PaymentMethod, Orders, Contact
 #from django.contrib.auth.models import User
 from django.forms.widgets import Input
 
@@ -74,9 +74,30 @@ class Orders_Form(forms.ModelForm):
                   'payment_method', 'additional_information')
 
     def __init__(self, *args, **kwargs):
-        country_ins = kwargs.pop('country', None)
+        country = kwargs.pop('country', None)
+        lang = kwargs.pop('lang', None)
+        lang_tech_info=Tech_Info.objects.get(lang__lang_abbr=lang)
+
+        error_mess_fio=lang_tech_info.error_fio
+        error_mess_tel=lang_tech_info.error_tel
+        error_mess_city=lang_tech_info.error_tel
+
+        error_mess_transport_company=lang_tech_info.error_transport_company
+        error_mess_payment_method=lang_tech_info.error_payment_method
+        error_mess_additional_information=lang_tech_info.error_additional_information
+
+
         super(Orders_Form, self).__init__(*args, **kwargs)
-        self.fields['transport_company'].queryset = Transport_Company.objects.filter(country__country=country_ins)
+        self.fields['fio'].error_messages={'required': error_mess_fio}
+        self.fields['tel'].error_messages={'required': error_mess_tel}
+        self.fields['city'].error_messages={'required': error_mess_city}
+
+        self.fields['transport_company'].error_messages={'required': error_mess_transport_company}
+        self.fields['payment_method'].error_messages={'required': error_mess_payment_method}
+        self.fields['additional_information'].error_messages={'required': error_mess_additional_information}
+
+
+        self.fields['transport_company'].queryset = Transport_Company.objects.filter(country__country=country)
         self.fields['payment_method'].choices = list_payment_method()
 
 class Orders_Form_My_Country(forms.ModelForm):

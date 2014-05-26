@@ -82,7 +82,7 @@ def order_view(request, num=1, lang='', curr='', country=''):
         if Country.objects.get(country=country).is_it_your_country==True:
             form = Orders_Form_My_Country(request.POST,lang=lang,country=country)
         else:
-            form = Orders_Form(request.POST,country=country)
+            form = Orders_Form(request.POST,lang=lang,country=country)
         if form.is_valid():
             fcd = form.cleaned_data
 
@@ -121,7 +121,7 @@ def order_view(request, num=1, lang='', curr='', country=''):
         if Country.objects.get(country=country).is_it_your_country==True:
             form = Orders_Form_My_Country(lang=lang,country=country)
         else:
-            form = Orders_Form(country=country)
+            form = Orders_Form(lang=lang,country=country)
 
     return render_to_response('order.html', {'form': form,
                                              'tech_info': tech_info,
