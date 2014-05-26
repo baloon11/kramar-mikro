@@ -19,46 +19,67 @@ class Tech_Info(models.Model):
     label_fio=models.CharField(verbose_name=u'ФИО',max_length=100,
                                help_text='надпись слева от формы',
                                default=u'ФИО') 
+    error_fio=models.CharField(verbose_name=u'ошибка при пустом поле "ФИО" ',max_length=100,
+                               help_text=u'появляется на странице "Бланк заказа" при назаполненном поле "ФИО" ',
+                               default=u'обязательное поле') 
+
     
     label_tel=models.CharField(verbose_name=u'телефон',max_length=20,
                                help_text='надпись слева от формы',
                                default=u'телефон')
+    error_tel=models.CharField(verbose_name=u'ошибка при пустом поле "Тел"',max_length=100,
+                               help_text=u'появляется на странице "Бланк заказа" при назаполненном поле "Тел" ',
+                               default=u'обязательное поле') 
+
     
     label_city=models.CharField(verbose_name=u'город',max_length=100,
                                help_text='надпись слева от формы',
                                default=u'город')
+    error_city=models.CharField(verbose_name=u'ошибка при пустом поле "Город"',max_length=100,
+                               help_text=u'появляется на странице "Бланк заказа" при назаполненном поле "Город" ',
+                               default=u'обязательное поле') 
     
     label_transport_company=models.CharField(verbose_name=u'транспортная компания',
                                max_length=1000,
                                help_text='надпись слева от формы', 
                                default=u'транспортная компания')
 
-    label_payment_method=models.CharField(verbose_name=u'способ оплаты',
+    error_transport_company=models.CharField(verbose_name=u'ошибка при пустом поле "Транспортная компания"',max_length=100,
+                               help_text=u'появляется на странице "Бланк заказа" при назаполненном поле "Транспортная компания" ',
+                               default=u'обязательное поле') 
+
+
+    label_payment_method=models.CharField(verbose_name=u'Способ оплаты',
                                max_length=1000,
                                help_text=' надпись слева от формы',
                                default=u'способ оплаты')
-    #label_bankcard=models.CharField(
-     #                         verbose_name=u'перевод на банковскую карту',
-     #                         max_length=1000,
-     #                         help_text=' надпись слева от формы',
-     #                         default=u'перевод на банковскую карту')
+
+    error_payment_method=models.CharField(verbose_name=u'ошибка при пустом поле "Способ оплаты"',max_length=100,
+                               help_text=u'появляется на странице "Бланк заказа" при назаполненном поле "Способ оплаты" ',
+                               default=u'обязательное поле') 
+
     label_additional_information=models.CharField(
                               max_length=10000,
-                              verbose_name=u'дополнительная информация',
+                              verbose_name=u'Дополнительная информация',
                               help_text='надпись слева от формы',
-                              default=u'дополнительная информация')
+                              default=u'Дополнительная информация')
+
+    error_additional_information=models.CharField(verbose_name=u'ошибка при пустом поле "Дополнительная информация"',max_length=100,
+                               help_text=u'появляется на странице "Бланк заказа" при назаполненном поле "Дополнительная информация" ',
+                               default=u'обязательное поле') 
+
 
     info_payment_method=RedactorField(
                                verbose_name=u'доп. информация к способу оплаты',
-                               max_length=1000,
+                               max_length=1000,blank=True,
                                help_text=' надпись снизу формы',
                                default=u'наложенный платеж Укрпочтой не осуществляется')
 
     info_additional_information=RedactorField(
                               verbose_name=u'дополнительная информация в помощь покупателю',
-                              max_length=1000,
+                              max_length=1000,blank=True,
                               help_text=' надпись снизу от формы\
-                              (указывается напротив поля "дополнительная информация")',
+                              (указывается  внизу поля "дополнительная информация")',
                               default=u'укажите номер склада,где хотели бы получить посылку\
                               или свой полный адрес, если вы  выбрали отправку Укрпочтой') 
     

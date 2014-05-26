@@ -96,11 +96,30 @@ class Orders_Form_My_Country(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         country = kwargs.pop('country', None)
         lang = kwargs.pop('lang', None)
+        lang_tech_info=Tech_Info.objects.get(lang__lang_abbr=lang)
+
+        error_mess_fio=lang_tech_info.error_fio
+        error_mess_tel=lang_tech_info.error_tel
+        error_mess_city=lang_tech_info.error_tel
+
+        error_mess_transport_company=lang_tech_info.error_transport_company
+        error_mess_payment_method=lang_tech_info.error_payment_method
+        error_mess_additional_information=lang_tech_info.error_additional_information
+
         super(Orders_Form_My_Country, self).__init__(*args, **kwargs)
+
+        self.fields['fio'].error_messages={'required': error_mess_fio}
+        self.fields['tel'].error_messages={'required': error_mess_tel}
+        self.fields['city'].error_messages={'required': error_mess_city}
+
+        self.fields['transport_company'].error_messages={'required': error_mess_transport_company}
+        self.fields['payment_method'].error_messages={'required': error_mess_payment_method}
+        self.fields['additional_information'].error_messages={'required': error_mess_additional_information}
+
         self.fields['transport_company'].queryset = Transport_Company.objects.filter(country__country=country)
         self.fields['payment_method'].choices = list_payment_method_my_country(lang)
 
-
+ 
 class Contacts (forms.Form):
     contact_subject = forms.CharField(max_length=100)
     name = forms.CharField(max_length=100)
