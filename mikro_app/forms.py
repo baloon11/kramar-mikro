@@ -128,7 +128,7 @@ class Orders_Form_My_Country(forms.ModelForm):
         error_mess_additional_information=lang_tech_info.error_additional_information
 
         super(Orders_Form_My_Country, self).__init__(*args, **kwargs)
-
+        self.lang_tech_info=lang_tech_info
         self.fields['fio'].error_messages={'required': error_mess_fio}
         self.fields['tel'].error_messages={'required': error_mess_tel}
         self.fields['city'].error_messages={'required': error_mess_city}
@@ -140,6 +140,11 @@ class Orders_Form_My_Country(forms.ModelForm):
         self.fields['transport_company'].queryset = Transport_Company.objects.filter(country__country=country)
         self.fields['payment_method'].choices = list_payment_method_my_country(lang)
 
+    def clean_payment_method(self):       
+        cod_transport_company=Transport_Company.objects.get(name=self.cleaned_data['transport_company']).cod
+        if cod_transport_company==False and self.cleaned_data['payment_method']==self.lang_tech_info.cod_text:
+            raise forms.ValidationError(self.lang_tech_info.delivery_without_cod)
+        return self.cleaned_data['payment_method']
 
 
 class Contacts(forms.ModelForm):
@@ -166,15 +171,3 @@ class Contacts(forms.ModelForm):
         self.fields['email'].error_messages={'required':error_contacts_email,'invalid':error_contacts_email_value}        
         self.fields['text'].error_messages={'required':error_contacts_text}
 
-                
-
-
-
-        
- 
-'''class Contacts (forms.Form):
-    contact_subject = forms.CharField(max_length=100)
-    name = forms.CharField(max_length=100)
-    email = forms.EmailField()
-    text = forms.CharField(max_length=10000,
-                           widget=forms.Textarea(attrs={'cols': 60, 'rows': 10}))'''

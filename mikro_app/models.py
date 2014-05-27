@@ -260,7 +260,7 @@ class Tech_Info(models.Model):
 
 class Transport_Company(models.Model):
     name=models.CharField(verbose_name=u'Название транспортной компании',
-                          max_length=50)
+                          max_length=50,unique=True)
     cod= models.BooleanField(default=True,
                                     verbose_name=u'осуществляет ли эта компания\
                                                    доставку наложенным платежем')
