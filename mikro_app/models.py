@@ -15,12 +15,29 @@ class Tech_Info(models.Model):
                                      то на главной страние не будет выдаваться окно для количества товара')
 #  ____________________________"Бланк заказа"_____________________   
     order_title=models.CharField(verbose_name=u'Заголовок в браузере на странице "Бланк заказа"',max_length=100,default=u'Бланк заказа')
-    order_text=RedactorField(verbose_name=u'текст на странице "Бланк заказа"',default=u'текст на странице "Бланк заказа"')
+    button_popup_in_page=models.CharField(verbose_name=u'Надпись в кнопке, по которому запускается всплывающее окно',
+                                          max_length=100, 
+                                          default=u'all transport companies') 
+
+    label_in_head_popup=models.CharField(verbose_name=u'Надпись в шапке всплывающего окна',
+                                          max_length=100, 
+                                          default=u'all transport companies')    
+
+    button_popup_close=models.CharField(verbose_name=u'Надпись в кнопке всплывающего окна',
+                                          max_length=100, 
+                                          default=u'Close')
+    order_text=RedactorField(verbose_name=u'текст на странице "Бланк заказа"',
+                             default=u'текст на странице "Бланк заказа"')
+    
+    please_correct_errors=models.CharField(verbose_name=u'Текст"Пожалуйста, исправьте ошибки"',max_length=200,
+                               help_text='надпись сверху формы, используется для форм "Бланк заказа" и "Контакты"',
+                               default=u'Пожалуйста, исправьте ошибки') 
+    
     label_fio=models.CharField(verbose_name=u'ФИО',max_length=100,
                                help_text='надпись слева от формы',
                                default=u'ФИО') 
     error_fio=models.CharField(verbose_name=u'ошибка при пустом поле "ФИО" ',max_length=100,
-                               help_text=u'появляется на странице "Бланк заказа" при назаполненном поле "ФИО" ',
+                               help_text=u'появляется на странице "Бланк заказа" при незаполненном поле "ФИО" ',
                                default=u'обязательное поле') 
 
     
@@ -28,7 +45,7 @@ class Tech_Info(models.Model):
                                help_text='надпись слева от формы',
                                default=u'телефон')
     error_tel=models.CharField(verbose_name=u'ошибка при пустом поле "Тел"',max_length=100,
-                               help_text=u'появляется на странице "Бланк заказа" при назаполненном поле "Тел" ',
+                               help_text=u'появляется на странице "Бланк заказа" при незаполненном поле "Тел" ',
                                default=u'обязательное поле') 
 
     
@@ -36,7 +53,7 @@ class Tech_Info(models.Model):
                                help_text='надпись слева от формы',
                                default=u'город')
     error_city=models.CharField(verbose_name=u'ошибка при пустом поле "Город"',max_length=100,
-                               help_text=u'появляется на странице "Бланк заказа" при назаполненном поле "Город" ',
+                               help_text=u'появляется на странице "Бланк заказа" при незаполненном поле "Город" ',
                                default=u'обязательное поле') 
     
     label_transport_company=models.CharField(verbose_name=u'транспортная компания',
@@ -45,7 +62,7 @@ class Tech_Info(models.Model):
                                default=u'транспортная компания')
 
     error_transport_company=models.CharField(verbose_name=u'ошибка при пустом поле "Транспортная компания"',max_length=100,
-                               help_text=u'появляется на странице "Бланк заказа" при назаполненном поле "Транспортная компания" ',
+                               help_text=u'появляется на странице "Бланк заказа" при незаполненном поле "Транспортная компания" ',
                                default=u'обязательное поле') 
 
 
@@ -55,7 +72,7 @@ class Tech_Info(models.Model):
                                default=u'способ оплаты')
 
     error_payment_method=models.CharField(verbose_name=u'ошибка при пустом поле "Способ оплаты"',max_length=100,
-                               help_text=u'появляется на странице "Бланк заказа" при назаполненном поле "Способ оплаты" ',
+                               help_text=u'появляется на странице "Бланк заказа" при незаполненном поле "Способ оплаты" ',
                                default=u'обязательное поле') 
 
     label_additional_information=models.CharField(
@@ -65,7 +82,7 @@ class Tech_Info(models.Model):
                               default=u'Дополнительная информация')
 
     error_additional_information=models.CharField(verbose_name=u'ошибка при пустом поле "Дополнительная информация"',max_length=100,
-                               help_text=u'появляется на странице "Бланк заказа" при назаполненном поле "Дополнительная информация" ',
+                               help_text=u'появляется на странице "Бланк заказа" при незаполненном поле "Дополнительная информация" ',
                                default=u'обязательное поле') 
 
 
@@ -189,13 +206,34 @@ class Tech_Info(models.Model):
 
 #____________________________________Контакты_______________________________
     title_contacts=models.CharField(verbose_name=u'Заголовок в браузере',max_length=100,default=u'Контакты')
+    
     contacts_text=RedactorField(verbose_name=u'текст на странице "Контакты"',default=u'текст на странице "Контакты"')
+    error_contacts_text=models.CharField(verbose_name=u'ошибка при пустом поле "Текст"',max_length=100,
+                               help_text=u'появляется на странице "Контакты" при незаполненном поле "Текст" ',
+                               default=u'обязательное поле') 
+
 
     label_contacts_subject=models.CharField(verbose_name=u'Тема',max_length=100,default=u'Тема')
+    error_contacts_subject=models.CharField(verbose_name=u'ошибка при пустом поле "Тема"',max_length=100,
+                               help_text=u'появляется на странице "Контакты" при незаполненном поле "Тема" ',
+                               default=u'обязательное поле') 
 
-    label_contacts_name=models.CharField(verbose_name=u'Имя',max_length=100,default=u'Предствтесь')
+
+
+    label_contacts_name=models.CharField(verbose_name=u'Имя',max_length=100,default=u'Представтесь')
+    error_contacts_name=models.CharField(verbose_name=u'ошибка при пустом поле "Имя"',max_length=100,
+                               help_text=u'появляется на странице "Контакты" при незаполненном поле "Имя" ',
+                               default=u'обязательное поле') 
 
     label_contacts_email=models.CharField(verbose_name=u'e-mail:',max_length=100,default=u'e-mail:')
+    error_contacts_email=models.CharField(verbose_name=u'ошибка при пустом поле "e-mail"',max_length=100,
+                               help_text=u'появляется на странице "Контакты" при незаполненном поле "e-mail" ',
+                               default=u'обязательное поле') 
+
+    error_contacts_email_value=models.CharField(verbose_name=u'ошибка при неправильно заполненном поле "e-mail"',max_length=100,
+                               help_text=u'появляется на странице "Контакты" при  неправильно заполненном поле "e-mail" ',
+                               default=u'Проверте правильность введенного e-mail') 
+
 
     label_contacts_text=models.CharField(verbose_name=u'Текст',max_length=10000,default=u'Текст')
     contacts_thanks=models.CharField(verbose_name=u'сообщение пользователю, что его письмо получено',

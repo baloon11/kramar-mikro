@@ -140,10 +140,41 @@ class Orders_Form_My_Country(forms.ModelForm):
         self.fields['transport_company'].queryset = Transport_Company.objects.filter(country__country=country)
         self.fields['payment_method'].choices = list_payment_method_my_country(lang)
 
+
+
+class Contacts(forms.ModelForm):
+    class Meta:
+        model = Contact
+        fields = ('contact_subject', 'name', 'email', 'text')
+
+    def __init__(self, *args, **kwargs):
+        lang = kwargs.pop('lang', None)
+        lang_tech_info=Tech_Info.objects.get(lang__lang_abbr=lang)
+
+        error_contacts_subject=lang_tech_info.error_contacts_subject
+        error_contacts_name=lang_tech_info.error_contacts_name
+
+        error_contacts_email=lang_tech_info.error_contacts_email
+        error_contacts_email_value=lang_tech_info.error_contacts_email_value
+
+        error_contacts_text=lang_tech_info.error_contacts_text
+
+        super(Contacts, self).__init__(*args, **kwargs)
+
+        self.fields['contact_subject'].error_messages={'required':error_contacts_subject}
+        self.fields['name'].error_messages={'required':error_contacts_name}       
+        self.fields['email'].error_messages={'required':error_contacts_email,'invalid':error_contacts_email_value}        
+        self.fields['text'].error_messages={'required':error_contacts_text}
+
+                
+
+
+
+        
  
-class Contacts (forms.Form):
+'''class Contacts (forms.Form):
     contact_subject = forms.CharField(max_length=100)
     name = forms.CharField(max_length=100)
     email = forms.EmailField()
     text = forms.CharField(max_length=10000,
-                           widget=forms.Textarea(attrs={'cols': 60, 'rows': 10}))
+                           widget=forms.Textarea(attrs={'cols': 60, 'rows': 10}))'''

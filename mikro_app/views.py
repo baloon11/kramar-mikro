@@ -150,7 +150,7 @@ def contacts(request, lang='', curr=''):
     all_is_right = ''
 
     if request.method == 'POST':
-        form = Contacts(request.POST)
+        form = Contacts(request.POST,lang=lang)
         if form.is_valid():
             fcd = form.cleaned_data
             new_letter = Contact(contact_subject=fcd['contact_subject'],
@@ -160,13 +160,13 @@ def contacts(request, lang='', curr=''):
                                  )
             new_letter.save()
             all_is_right = Tech_Info.objects.get(id=1).contacts_thanks
-            form = Contacts()
+            form = Contacts(lang=lang)
            # form_homepage=Homepage_Form()
            # return render_to_response('start.html',{'contacts_thanks':Tech_Info.objects.get(id=1).contacts_thanks,
             #                                        'form':form_homepage},
             # context_instance=RequestContext(request) )
     else:
-        form = Contacts()
+        form = Contacts(lang=lang)
     return render_to_response('contacts.html', {'form': form,
                                                 'all_is_right': all_is_right,
                                                 'tech_info': tech_info,

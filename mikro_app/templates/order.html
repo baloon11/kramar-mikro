@@ -26,7 +26,7 @@
 <td ></td> 
 <td>{% if form.errors %}
 <p style="color: red;">
-Пожалуйста, исправьте ошибки  
+{{tech_info.please_correct_errors}} 
 </p>
 {% endif %}
 </div></td>
@@ -91,7 +91,7 @@ value="{{tech_info.label_button_contacts_in_page}}">
 
 
 
-<a href="#myModal" role="button" class="btn btn-inverse" data-toggle="modal">all transport companies</a>  
+<a href="#myModal" role="button" class="btn btn-inverse" data-toggle="modal">{{tech_info.button_popup_in_page}}</a>  
 
  
 <div id="myModal" class="modal hide fade" style="color:black;" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" 
@@ -99,7 +99,7 @@ aria-hidden="true">
 
   <div class="modal-header">  
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>  
-    <h3 id="myModalLabel">All Transport Companies</h3>  
+    <h3 id="myModalLabel">{{tech_info.label_in_head_popup}}</h3>  
   </div>  
   <div class="modal-body"> 
 
@@ -124,7 +124,7 @@ aria-hidden="true">
 
   </div>  
   <div class="modal-footer">  
-    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>  
+    <button class="btn" data-dismiss="modal" aria-hidden="true">{{tech_info.button_popup_close}}</button>  
    
   </div>  
 </div> 
