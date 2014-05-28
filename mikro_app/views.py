@@ -121,17 +121,24 @@ def order_view(request, num=1, lang='', curr='', country=''):
         if Country.objects.get(country=country).is_it_your_country==True:
             form = Orders_Form_My_Country(lang=lang,country=country)
         else:
-            form = Orders_Form(lang=lang,country=country)
+            form = Orders_Form(lang=lang,country=country)      
+    
+    dict_order={'form': form,
+                'tech_info': tech_info,
+                'lang': lang,
+                'curr': curr,
+                'num': num,
+                'transport_company_filter_country': Transport_Company.objects.filter(country__country=country),
+                'transport_company_all': Transport_Company.objects.all(),
+                'country': country,
+                'view': 'order_view'}
 
-    return render_to_response('order.html', {'form': form,
-                                             'tech_info': tech_info,
-                                             'lang': lang,
-                                             'curr': curr,
-                                             'num': num,
-                                             'transport_company_filter_country': Transport_Company.objects.filter(country__country=country),
-                                             'transport_company_all': Transport_Company.objects.all(),
-                                             'country': country,
-                                             'view': 'order_view'},
+    if type(form)==Orders_Form_My_Country:  
+        dict_order['my_country']=True
+    else:
+        dict_order['my_country']=False
+
+    return render_to_response('order.html',dict_order,
                               context_instance=RequestContext(request))
 
 

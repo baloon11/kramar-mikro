@@ -84,8 +84,18 @@ value="{{tech_info.label_button_contacts_in_page}}">
 {{transport_company.name}}<br>
 <a href="{{transport_company.url_offices}}">{{tech_info.label_url_offices}}</a><br>
 <a href="{{transport_company.url_shipping_and_payment}}">{{tech_info.label_url_shipping_and_payment}}</a><br>
-<br>
 
+{%if my_country %}
+
+{%if transport_company.cod %}
+{{tech_info.cod_is_possible}}
+{%else%}
+{{tech_info.cod_is_impossible}}
+{%endif%}
+ 
+{%endif%}
+
+<br><br>
 {%endfor%}
 <br>
 
