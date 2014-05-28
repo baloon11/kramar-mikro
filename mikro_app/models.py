@@ -101,7 +101,7 @@ class Tech_Info(models.Model):
                               или свой полный адрес, если вы  выбрали отправку Укрпочтой') 
     
 
-    delivery_without_cod=models.CharField(                              
+    delivery_without_cod=RedactorField(                              
                                verbose_name=u'С этим перевозчиком оплата \
                                наложенным платежем не осуществляется',
                                max_length=1000,
@@ -285,7 +285,7 @@ class Orders(models.Model):
     tel=models.CharField(verbose_name=u'телефон',max_length=20)
     country=models.ForeignKey('Country',verbose_name=u'Страна')
     city=models.CharField(verbose_name=u'город',max_length=50)                                                              
-    transport_company=models.ForeignKey(Transport_Company,verbose_name=u'транспортная компания',max_length=1000)
+    transport_company=models.CharField(verbose_name=u'транспортная компания',max_length=1000)
     payment_method=models.CharField(verbose_name=u'метод оплаты',max_length=1000)
     sum_price=models.FloatField(verbose_name=u'общая сумма заказа')
     curr=models.CharField(verbose_name=u'Валюта',max_length=50,default=u'валюта')  

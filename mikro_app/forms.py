@@ -50,6 +50,16 @@ def list_payment_method_my_country(lang):
                                    )
     return all_payment_methods
 
+def list_transport_company_filter(country):
+    all_transport_company = list()
+    for transport_company_ins in Transport_Company.objects.filter(country__country=country):
+        all_transport_company.append((unicode(transport_company_ins.name),
+                                    unicode(transport_company_ins.name))
+                                    )
+    return all_transport_company
+
+
+
 
 class Homepage_Form(forms.Form):
     num = forms.ChoiceField(widget=forms.Select, choices=list_num())
@@ -66,7 +76,9 @@ class Orders_Form(forms.ModelForm):
                                              widget=forms.Textarea(
                                                  attrs={'cols': 60, 'rows': 8})
                                              )
-    payment_method = forms.ChoiceField(widget=forms.Select)                                        
+    payment_method = forms.ChoiceField(widget=forms.Select) 
+    transport_company = forms.ChoiceField(widget=forms.Select)
+
 
     class Meta:
         model = Orders
@@ -97,8 +109,9 @@ class Orders_Form(forms.ModelForm):
         self.fields['additional_information'].error_messages={'required': error_mess_additional_information}
 
 
-        self.fields['transport_company'].queryset = Transport_Company.objects.filter(country__country=country)
+ #       self.fields['transport_company'].queryset = Transport_Company.objects.filter(country__country=country)
         self.fields['payment_method'].choices = list_payment_method()
+        self.fields['transport_company'].choices = list_transport_company_filter(country)
 
 class Orders_Form_My_Country(forms.ModelForm):
 
@@ -106,8 +119,9 @@ class Orders_Form_My_Country(forms.ModelForm):
                                              widget=forms.Textarea(
                                                  attrs={'cols': 60, 'rows': 8})
                                              )
-
     payment_method = forms.ChoiceField(widget=forms.Select)
+    transport_company = forms.ChoiceField(widget=forms.Select)
+
 
     class Meta:
         model = Orders
@@ -129,6 +143,7 @@ class Orders_Form_My_Country(forms.ModelForm):
 
         super(Orders_Form_My_Country, self).__init__(*args, **kwargs)
         self.lang_tech_info=lang_tech_info
+
         self.fields['fio'].error_messages={'required': error_mess_fio}
         self.fields['tel'].error_messages={'required': error_mess_tel}
         self.fields['city'].error_messages={'required': error_mess_city}
@@ -137,13 +152,15 @@ class Orders_Form_My_Country(forms.ModelForm):
         self.fields['payment_method'].error_messages={'required': error_mess_payment_method}
         self.fields['additional_information'].error_messages={'required': error_mess_additional_information}
 
-        self.fields['transport_company'].queryset = Transport_Company.objects.filter(country__country=country)
+#        self.fields['transport_company'].queryset = Transport_Company.objects.filter(country__country=country)
         self.fields['payment_method'].choices = list_payment_method_my_country(lang)
+        self.fields['transport_company'].choices = list_transport_company_filter(country)
 
     def clean_payment_method(self):       
         cod_transport_company=Transport_Company.objects.get(name=self.cleaned_data['transport_company']).cod
         if cod_transport_company==False and self.cleaned_data['payment_method']==self.lang_tech_info.cod_text:
-            raise forms.ValidationError(self.lang_tech_info.delivery_without_cod)
+                raise forms.ValidationError(self.lang_tech_info.delivery_without_cod)
+
         return self.cleaned_data['payment_method']
 
 

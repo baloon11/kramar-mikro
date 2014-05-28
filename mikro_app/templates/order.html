@@ -50,7 +50,7 @@
 </tr>
 
 <tr>
-<td class="align">{{tech_info.label_payment_method}}</td> <td>{{form.payment_method}} {{form.payment_method.errors}}</td>
+<td class="align">{{tech_info.label_payment_method}}</td> <td>{{form.payment_method}}<br>{{form.payment_method.errors|safeseq|join:" "}}</td>
 </tr>
 
 <tr>
