@@ -107,8 +107,11 @@ class Orders_Admin(admin.ModelAdmin):
     form = Orders_Admin_Form
 
 
+
 class Contact_Admin(admin.ModelAdmin):
     form = Contact_Admin_Form
+    list_display = ('date_time', 'contact_subject', 'is_it_close')
+    list_display_links = ('date_time', 'contact_subject', 'is_it_close')
 
 
 admin.site.register(Tech_Info)

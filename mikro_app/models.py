@@ -346,11 +346,11 @@ class Static_Pages(models.Model):
     text = RedactorField(verbose_name=u'Текст на странице',default=u'This page is under construction')
     num=models.IntegerField(verbose_name=u'Порядковый номер страницы в списке',unique=True)
     def __unicode__(self):
-        return '%s %s' % (self.title,self.num)
+        return '%s %s%s' % (self.title,u'порядковый номер ',self.num)
     class Meta:
         ordering = ["num"]
         verbose_name_plural = "статические страницы"
-        
+        verbose_name = "'статическая страница'"
 
 class Language(models.Model):
     lang_abbr= models.CharField(u'двух(трех)буквенная аббревиатура языка',max_length=3,unique=True) 
