@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render_to_response
-from mikro_app.models import Tech_Info, Transport_Company, Orders, Contact, Static_Pages, Language, Currency, Country, PaymentMethod
+from mikro_app.models import Tech_Info, Transport_Company, Orders, Contact, Static_Pages, Language, Currency, Country, PaymentMethod,Basic_Settings
 from mikro_app.forms import Homepage_Form, Homepage_Form_Unique, Orders_Form,Orders_Form_My_Country, Contacts
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
@@ -36,7 +36,7 @@ def start(request, lang='', curr=''):
     tech_info = lang_id(lang)
     lang = lang_def(lang)
 
-    if tech_info.unique == True:
+    if Basic_Settings.objects.get(id=1).unique == True:
         if request.method == 'POST':
             form = Homepage_Form_Unique(request.POST)
             if form.is_valid():
@@ -102,7 +102,7 @@ def order_view(request, num=1, lang='', curr='', country=''):
                 additional_information=fcd['additional_information']
             )
             new_order.save()
-            if Tech_Info.objects.get(id=1).unique == True:
+            if Basic_Settings.objects.get(id=1).unique == True:
                 unique = True
             else:
                 unique = False

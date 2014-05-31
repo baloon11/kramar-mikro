@@ -4,15 +4,47 @@ from redactor.fields import RedactorField
 from django.db.models.signals import post_init, post_save, post_delete
 from django.dispatch import receiver
 
+class Basic_Settings(models.Model):                           
+    unique=models.BooleanField(default=True,
+                                    verbose_name=u'в ед.экземпляре',
+                                     help_text=u'Если товар уникальный,\
+                                     то на главной страние не будет выдаваться окно для количества товара')
+
+    email=models.EmailField(verbose_name=u'email',default=u'email@ukr.net',blank=True)
+    
+
+    all_social_network_bool= models.BooleanField(default=True,
+                                                 blank=True, 
+                                                 verbose_name=u'вкл.колонку "Соц сети" ')
+    
+    vk=models.URLField(verbose_name=u'ссылка на VK',blank=True)
+    vk_bool= models.BooleanField(default=True,blank=True, 
+                                 verbose_name=u'вкл.иконку VK')
+     
+    fb=models.URLField(verbose_name=u' ссылка на Facebook',blank=True)
+    fb_bool= models.BooleanField(default=True, blank=True,
+                                 verbose_name=u'вкл.иконку Facebook')
+    
+    youtube=models.URLField(verbose_name=u'ссылка на канал Youtube',blank=True)
+    youtube_bool= models.BooleanField(default=True, blank=True,
+                                    verbose_name=u'вкл.иконку Youtube')
+    def __unicode__(self):
+        return '%s %s %s %s %s %s %s %s %s ' % (self.unique,
+                                                self.email, 
+                                                self.all_social_network_bool,
+                                                self.vk,
+                                                self.vk_bool,
+                                                self.fb,
+                                                self.fb_bool,
+                                                self.youtube,
+                                                self.youtube_bool)
+    class Meta:
+        verbose_name_plural = "Базовые настройки"
+        verbose_name = "'Базовые настройки'"
 
 
 class Tech_Info(models.Model):                           
     lang=models.ForeignKey('Language',blank=True)
-    unique=models.BooleanField(default=True,
-                                    verbose_name=u'Товар продается в единичном экземпляре \
-                                    (галочка-да-в единичном)',
-                                     help_text=u'Если товар уникальный,\
-                                     то на главной страние не будет выдаваться окно для количества товара')
 #  ____________________________"Бланк заказа"_____________________   
     order_title=models.CharField(verbose_name=u'Заголовок в браузере на странице "Бланк заказа"',max_length=100,default=u'Бланк заказа')
     button_popup_in_page=models.CharField(verbose_name=u'Надпись в кнопке, по которому запускается всплывающее окно',
@@ -157,29 +189,6 @@ class Tech_Info(models.Model):
     label_curr=models.CharField(verbose_name=u'Валюта (надпись)',
                                max_length=100,
                                default=u'Валюта')
-
-    email=models.EmailField(verbose_name=u'email магазина',default=u'email@ukr.net',blank=True)
-    
-
-    all_social_network_bool= models.BooleanField(default=True,
-                                                 blank=True, 
-                                                 verbose_name=u'Должна ли быть видна вся\
-                                                 колонка "Соц сети" (галочка-должна)')
-    
-    vk=models.URLField(verbose_name=u'ссылка на сообщество Вконтакте',blank=True)
-    vk_bool= models.BooleanField(default=True,blank=True, 
-                                 verbose_name=u'Должна ли быть видна\
-                                 кнопка Вконтакте (галочка-должна)')
-     
-    fb=models.URLField(verbose_name=u'ссылка на сообщество Facebook',blank=True)
-    fb_bool= models.BooleanField(default=True, blank=True,
-                                 verbose_name=u'Должна ли быть видна\
-                                 кнопка Facebook (галочка-должна)')
-    
-    youtube=models.URLField(verbose_name=u'ссылка на канал youtube',blank=True)
-    youtube_bool= models.BooleanField(default=True, blank=True,
-                                    verbose_name=u'Должна ли быть видна \
-                                    кнопка Youtube (галочка-должна)')
 
     label_buy_num=models.CharField(
                               verbose_name=u'Укажите количество',

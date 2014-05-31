@@ -1,7 +1,7 @@
 # coding: utf-8
 from django.contrib import admin
 from django import forms
-from mikro_app.models import Tech_Info, Transport_Company, Orders, Static_Img, Contact, Static_Pages, Language, Currency, Country, PaymentMethod
+from mikro_app.models import Tech_Info, Transport_Company, Orders, Static_Img, Contact, Static_Pages, Language, Currency, Country, PaymentMethod,Basic_Settings
 
 label_transport_company = Tech_Info.objects.get(id=1).label_transport_company
 
@@ -114,6 +114,23 @@ class Contact_Admin(admin.ModelAdmin):
     list_display_links = ('date_time', 'contact_subject', 'is_it_close')
 
 
+class Basic_Settings_Admin(admin.ModelAdmin):
+    list_display = ('unique',
+                    'email',
+                    'all_social_network_bool',
+                    'vk', 'vk_bool',
+                    'fb','fb_bool',
+                    'youtube', 'youtube_bool')
+    
+    list_editable =(
+                    'email',
+                    'all_social_network_bool',
+                    'vk', 'vk_bool',
+                    'fb','fb_bool',
+                    'youtube', 'youtube_bool')
+
+    model = Basic_Settings
+
 admin.site.register(Tech_Info)
 admin.site.register(Transport_Company)
 admin.site.register(Orders, Orders_Admin)
@@ -124,3 +141,4 @@ admin.site.register(Language, Lang_Admin)
 admin.site.register(Currency, Currency_Admin)
 admin.site.register(Country, Country_Admin)
 admin.site.register(PaymentMethod)
+admin.site.register(Basic_Settings,Basic_Settings_Admin)
