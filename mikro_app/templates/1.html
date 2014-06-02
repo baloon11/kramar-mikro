@@ -118,30 +118,21 @@ href="{% url view lang=lang curr=curr %}">{{curr}} </a>
 
 <div class="span2">
 <div class="social_network">
-{% if basic_settings.all_social_network_bool%}
+
 <div align="right">
 <br>
 <br>
-{% if basic_settings.vk_bool%}
-<a href="{{basic_settings.vk}}"> <img src="{{STATIC_URL}}vk.png" alt="Vk"></a>
+{% for social_network in social_networks%} 
+{%if social_network.img_soc %}                               
+<a href="{{social_network.link_soc}}" title="{{social_network.title}}">
+    <img src="{{social_network.img_soc.url}}" alt="{{social_network.title}}">
+</a>
 <br>
 <br>
-{% endif %}
-
-{% if basic_settings.fb_bool%}
-<a href="{{basic_settings.fb}}"><img src="{{STATIC_URL}}facebook.png" alt="Facebook"></a>
-<br>
-<br>
-{% endif %}
-
-{% if basic_settings.youtube_bool%}
-<a 
-href="{{basic_settings.youtube}}"><img src="{{STATIC_URL}}youtube.png" alt="Youtube"></a>
-<br>
-<br>
-{% endif %}
-</div>
 {%endif%}
+{%endfor%}
+</div>
+
 </div>
 
 </div>

@@ -4,43 +4,39 @@ from redactor.fields import RedactorField
 from django.db.models.signals import post_init, post_save, post_delete
 from django.dispatch import receiver
 
-class Basic_Settings(models.Model):                           
+class Basic_Settings(models.Model):
+    title=models.CharField(verbose_name=u'Описание', max_length=300,default=u'Базовые настройки')                           
     unique=models.BooleanField(default=True,
-                                    verbose_name=u'в ед.экземпляре',
+                                    verbose_name=u'товар продается в ед.экземпляре',
                                      help_text=u'Если товар уникальный,\
                                      то на главной страние не будет выдаваться окно для количества товара')
 
     email=models.EmailField(verbose_name=u'email',default=u'email@ukr.net',blank=True)
     
-
-    all_social_network_bool= models.BooleanField(default=True,
-                                                 blank=True, 
-                                                 verbose_name=u'вкл.колонку "Соц сети" ')
-    
-    vk=models.URLField(verbose_name=u'ссылка на VK',blank=True)
-    vk_bool= models.BooleanField(default=True,blank=True, 
-                                 verbose_name=u'вкл.иконку VK')
-     
-    fb=models.URLField(verbose_name=u' ссылка на Facebook',blank=True)
-    fb_bool= models.BooleanField(default=True, blank=True,
-                                 verbose_name=u'вкл.иконку Facebook')
-    
-    youtube=models.URLField(verbose_name=u'ссылка на канал Youtube',blank=True)
-    youtube_bool= models.BooleanField(default=True, blank=True,
-                                    verbose_name=u'вкл.иконку Youtube')
     def __unicode__(self):
-        return '%s %s %s %s %s %s %s %s %s ' % (self.unique,
-                                                self.email, 
-                                                self.all_social_network_bool,
-                                                self.vk,
-                                                self.vk_bool,
-                                                self.fb,
-                                                self.fb_bool,
-                                                self.youtube,
-                                                self.youtube_bool)
+        return '%s %s' % (self.unique,self.email) 
+                                                
     class Meta:
         verbose_name_plural = "Базовые настройки"
         verbose_name = "'Базовые настройки'"
+
+
+class Social_Network (models.Model):
+    title=models.CharField(verbose_name=u'Название ресурса', max_length=300)
+    link_soc=models.URLField(verbose_name=u'ссылка на ресурс',blank=True)
+    bool_soc= models.BooleanField(default=True,blank=True, 
+                                 verbose_name=u'вкл.иконку') 
+    img_soc= models.ImageField(verbose_name=u'Иконка',
+                               upload_to='media/',
+                               blank=True,
+                               help_text=u'Рекомендованный размер 48х48')    
+
+    def __unicode__(self):
+        return '%s' % self.title
+                                                
+    class Meta:
+        verbose_name_plural = "Соц. сети и доп. ресурсы"
+        verbose_name = "ресурс"
 
 
 class Tech_Info(models.Model):                           
@@ -413,8 +409,3 @@ class PaymentMethod(models.Model):
         return '%s ' % self.payment_method
     class Meta:
         verbose_name_plural = "Методы оплаты"
-
-        
-
-
-        

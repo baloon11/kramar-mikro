@@ -1,7 +1,7 @@
 # coding: utf-8
 from django.contrib import admin
 from django import forms
-from mikro_app.models import Tech_Info, Transport_Company, Orders, Static_Img, Contact, Static_Pages, Language, Currency, Country, PaymentMethod,Basic_Settings
+from mikro_app.models import Tech_Info, Transport_Company, Orders, Static_Img, Contact, Static_Pages, Language, Currency, Country, PaymentMethod,Basic_Settings,Social_Network
 
 label_transport_company = Tech_Info.objects.get(id=1).label_transport_company
 
@@ -115,20 +115,12 @@ class Contact_Admin(admin.ModelAdmin):
 
 
 class Basic_Settings_Admin(admin.ModelAdmin):
-    list_display = ('unique',
-                    'email',
-                    'all_social_network_bool',
-                    'vk', 'vk_bool',
-                    'fb','fb_bool',
-                    'youtube', 'youtube_bool')
-    
-    list_editable =(
-                    'email',
-                    'all_social_network_bool',
-                    'vk', 'vk_bool',
-                    'fb','fb_bool',
-                    'youtube', 'youtube_bool')
+    def __init__(self, *args, **kwargs):
+        super(Basic_Settings_Admin, self).__init__(*args, **kwargs)
+        self.list_display_links = (None, )
 
+    list_display = ('title','unique','email') 
+    list_editable = ('unique','email')    
     model = Basic_Settings
 
 admin.site.register(Tech_Info)
@@ -142,3 +134,4 @@ admin.site.register(Currency, Currency_Admin)
 admin.site.register(Country, Country_Admin)
 admin.site.register(PaymentMethod)
 admin.site.register(Basic_Settings,Basic_Settings_Admin)
+admin.site.register(Social_Network)

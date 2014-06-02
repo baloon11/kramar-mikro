@@ -1,5 +1,5 @@
 from django.conf import settings
-from mikro_app.models import Tech_Info,Static_Img,Static_Pages,Language,Currency,Basic_Settings
+from mikro_app.models import Tech_Info,Static_Img,Static_Pages,Language,Currency,Basic_Settings,Social_Network
 def all_languages():
 	all_languages=list()
 	for tech_info in Tech_Info.objects.all():
@@ -20,5 +20,6 @@ def my_vars(request):
         'static_pages':Static_Pages.objects.all(),
         'all_languages':all_languages(),
         'all_currencies':all_currencies(),
-        'basic_settings':Basic_Settings.objects.get(id=1)
+        'basic_settings':Basic_Settings.objects.get(id=1),
+        'social_networks':Social_Network.objects.all()
            }

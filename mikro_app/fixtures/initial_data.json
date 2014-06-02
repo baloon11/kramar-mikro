@@ -1,4 +1,12 @@
 [
+{"pk": 1, "model": "mikro_app.Basic_Settings",
+"fields": {"unique":true}
+},
+
+{"pk": 1, "model": "mikro_app.Social_Network",
+"fields": {"title":"Facebook"}
+},
+
 {"pk": 1, "model": "mikro_app.Tech_Info",
 "fields": {"logo":"Kramar-mikro","lang":1}
 },
