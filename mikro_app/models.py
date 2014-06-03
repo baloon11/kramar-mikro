@@ -69,7 +69,7 @@ class Tech_Info(models.Model):
                                default=u'обязательное поле') 
 
     
-    label_tel=models.CharField(verbose_name=u'телефон',max_length=20,
+    label_tel=models.CharField(verbose_name=u'телефон',max_length=20, 
                                help_text='надпись слева от формы',
                                default=u'телефон')
     error_tel=models.CharField(verbose_name=u'ошибка при пустом поле "Тел"',max_length=100,
@@ -114,7 +114,7 @@ class Tech_Info(models.Model):
                                default=u'обязательное поле') 
 
 
-    info_payment_method=RedactorField(
+    info_payment_method=RedactorField(  
                                verbose_name=u'доп. информация к способу оплаты',
                                max_length=1000,blank=True,
                                help_text=' надпись снизу формы',
@@ -172,9 +172,8 @@ class Tech_Info(models.Model):
     logo=models.CharField(verbose_name=u'логотип(надпись)',
                           max_length=50,
                           default=u'Kramar_mikro')
-    homepage_text=RedactorField(verbose_name=u'текст на Главной странице')
+    homepage_text=RedactorField(verbose_name=u'текст на Главной странице') 
 
-    #logo_img=models.
     thanks_for_buying=models.CharField(verbose_name=u'Спасибо за покупку(надпись)',
                                        max_length=50,
                                        default=u'Спасибо за покупку')
@@ -213,7 +212,7 @@ class Tech_Info(models.Model):
     title_contacts=models.CharField(verbose_name=u'Заголовок в браузере',max_length=100,default=u'Контакты')
     
     contacts_text=RedactorField(verbose_name=u'текст на странице "Контакты"',default=u'текст на странице "Контакты"')
-    error_contacts_text=models.CharField(verbose_name=u'ошибка при пустом поле "Текст"',max_length=100,
+    error_contacts_text=models.CharField(verbose_name=u'ошибка при пустом поле "Текст"',max_length=100, 
                                help_text=u'появляется на странице "Контакты" при незаполненном поле "Текст" ',
                                default=u'обязательное поле') 
 
@@ -243,7 +242,7 @@ class Tech_Info(models.Model):
     label_contacts_text=models.CharField(verbose_name=u'Текст',max_length=10000,default=u'Текст')
     contacts_thanks=models.CharField(verbose_name=u'сообщение пользователю, что его письмо получено',
                                      max_length=10000,default=u'Спасибо за ваше письмо')
-    label_button_contacts_in_page=models.CharField(
+    label_button_contacts_in_page=models.CharField( 
                               verbose_name=u'надпись в кнопке "Отправить письмо"',
                               max_length=50,
                               default=u'Отправить')
@@ -253,7 +252,7 @@ class Tech_Info(models.Model):
     title_shipping_and_payment=models.CharField(verbose_name=u'Заголовок в браузере',max_length=100,default=u'Доставка и оплата')
 
     shipping_and_payment_text=RedactorField(verbose_name=u'текст на странице "Доставка и Оплата"',
-                                            default=u'текст на странице "Доставка и Оплата"')
+                                            default=u'текст на странице "Доставка и Оплата"') 
 
     def __unicode__(self):
         return u'техническая информация для языка '+'%s' % self.lang.lang_abbr
