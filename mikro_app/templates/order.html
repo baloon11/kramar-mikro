@@ -82,15 +82,15 @@ value="{{tech_info.label_button_contacts_in_page}}">
 <h4>{{country}}</h4>
 {%for transport_company in transport_company_filter_country%}
 {{transport_company.name}}<br>
-<a href="{{transport_company.url_offices}}">{{tech_info.label_url_offices}}</a><br>
-<a href="{{transport_company.url_shipping_and_payment}}">{{tech_info.label_url_shipping_and_payment}}</a><br>
+<a href="{{transport_company.url_offices}}">{{tech_info.label_url_offices|safe}}</a><br>
+<a href="{{transport_company.url_shipping_and_payment}}">{{tech_info.label_url_shipping_and_payment|safe}}</a><br>
 
 {%if my_country %}
 
 {%if transport_company.cod %}
-{{tech_info.cod_is_possible}}
+{{tech_info.cod_is_possible|safe}}
 {%else%}
-{{tech_info.cod_is_impossible}}
+{{tech_info.cod_is_impossible|safe}}
 {%endif%}
  
 {%endif%}
