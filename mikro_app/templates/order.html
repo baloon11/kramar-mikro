@@ -50,11 +50,31 @@
 </tr>
 
 <tr>
-<td class="align">{{tech_info.label_payment_method}}</td> <td>{{form.payment_method}}<br>{{form.payment_method.errors|safeseq|join:" "}}</td>
+<td class="align">{{tech_info.label_payment_method}}</td> 
+<td>
+{{form.payment_method}}<br>{{form.payment_method.errors|safeseq|join:" "}}
+
+{%if tech_info.info_payment_method %}
+{{  tech_info.info_payment_method|safe }}
+{%endif%}
+
+</td>
 </tr>
 
+
 <tr>
-<td style="text-align: center;">{{tech_info.label_additional_information}}</td> <td>{{form.additional_information}} {{form.additional_information.errors}}</td>
+<td style="text-align: center;">
+{{tech_info.label_additional_information}}</td>
+
+ <td>
+ {{form.additional_information}} 
+ {{form.additional_information.errors}} 
+
+ {%if tech_info.info_additional_information %}
+ <br>
+ {{ tech_info.info_additional_information|safe }}
+{%endif%}
+</td>
 </tr>
 
 <tr>    
