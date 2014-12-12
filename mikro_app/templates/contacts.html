@@ -6,9 +6,9 @@
 {% block center %}
 
 
-{% if tech_info.email%}
+{% if basic_settings.email%}
 <div align="right">
-<a href="mailto:{{tech_info.email}}"><h4>{{tech_info.email}}</h4></a>
+<a href="mailto:{{basic_settings.email}}"><h4>{{basic_settings.email}}</h4></a>
 </div>
 {% endif %}
 
@@ -33,20 +33,41 @@
 
 {% if form.errors %}
 <p style="color: red;">
-Пожалуйста, исправьте ошибки   
+{{tech_info.please_correct_errors}}
+   
 </p>
 {% endif %}
 </div>
 
 <form action="" method="post">  {% csrf_token %}
 <table>
-{{form}}
+
+<tr>    
+<td class="align">{{tech_info.label_contacts_name}}</td> <td>{{form.name}} {{form.name.errors}}</td>
+</tr>
+
+<tr>    
+<td class="align">{{tech_info.label_contacts_email}}</td> <td>{{form.email}} {{form.email.errors}}</td>
+</tr>
+
+<tr>    
+<td class="align">{{tech_info.label_contacts_subject}}</td> <td>{{form.contact_subject}} {{form.contact_subject.errors}}</td>
+</tr>
+
+<tr>    
+<td style="text-align: center;">{{tech_info.label_contacts_text}}</td> <td>{{form.text}} {{form.text.errors}}</td>
+</tr>
+
+<tr>    
+<td></td> 
+
+<td style="text-align: center;">
+<input type="submit"  class="btn btn-inverse" 
+value="{{tech_info.label_button_contacts_in_page}}">	
+</td>
+</tr>
 </table>
 
-<div style=" padding-left: 90px ">
-<input type="submit"  class="btn btn-inverse" 
-value="{{tech_info.label_button_contacts_in_page}}">
-</div>
 </form>
 </div>
 

@@ -1,1 +1,8 @@
-select {width:60px}
+.country select {
+width:100px;
+}
+
+.num select {
+width:50px;
+}
+

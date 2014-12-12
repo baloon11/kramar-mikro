@@ -1,5 +1,32 @@
 [
+{"pk": 1, "model": "mikro_app.Basic_Settings",
+"fields": {"unique":true}
+},
+
+{"pk": 1, "model": "mikro_app.Social_Network",
+"fields": {"title":"Facebook"}
+},
+
 {"pk": 1, "model": "mikro_app.Tech_Info",
-"fields": {"logo":"Kramar-mikro"}
+"fields": {"logo":"Kramar-mikro","lang":1}
+},
+{"pk": 1, "model": "mikro_app.Language",
+"fields": {"lang_abbr":"rus",
+           "default":true} 
+},
+
+{"pk": 1, "model": "mikro_app.Currency",
+"fields": {"curr_abbr":"euro",
+           "default":true,
+           "curr_price":10}
+ },
+
+{"pk": 1, "model": "mikro_app.Country",
+"fields": {"country":"Ukraine"}
+},
+
+{"pk": 1, "model": "mikro_app.Transport_Company",
+"fields": {"name":"Nova Poshta"}
 }
+
 ]
