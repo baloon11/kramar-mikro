@@ -124,7 +124,7 @@ TEMPLATE_DIRS = (os.path.join(PROJECT_ROOT, 'templates'),
 INSTALLED_APPS = (
     'mikro_app',
     'redactor', 
-   # 'south',   
+    'south',   
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
