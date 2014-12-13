@@ -140,15 +140,6 @@ class Migration(SchemaMigration):
         ))
         db.create_unique(m2m_table_name, ['static_img_id', 'tech_info_id'])
 
-        # Adding model 'Static_Img_Text'
-        db.create_table(u'mikro_app_static_img_text', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('text', self.gf('django.db.models.fields.CharField')(max_length=1000)),
-            ('img', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['mikro_app.Static_Img'], unique=True)),
-            ('lang', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['mikro_app.Language'], unique=True)),
-        ))
-        db.send_create_signal(u'mikro_app', ['Static_Img_Text'])
-
         # Adding model 'Contact'
         db.create_table(u'mikro_app_contact', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -227,9 +218,6 @@ class Migration(SchemaMigration):
 
         # Removing M2M table for field start on 'Static_Img'
         db.delete_table(db.shorten_name(u'mikro_app_static_img_start'))
-
-        # Deleting model 'Static_Img_Text'
-        db.delete_table(u'mikro_app_static_img_text')
 
         # Deleting model 'Contact'
         db.delete_table(u'mikro_app_contact')
@@ -323,13 +311,6 @@ class Migration(SchemaMigration):
             'num': ('django.db.models.fields.IntegerField', [], {'default': '1', 'unique': 'True'}),
             'start': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['mikro_app.Tech_Info']", 'symmetrical': 'False'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '1000'})
-        },
-        u'mikro_app.static_img_text': {
-            'Meta': {'ordering': "['id']", 'object_name': 'Static_Img_Text'},
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'img': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['mikro_app.Static_Img']", 'unique': 'True'}),
-            'lang': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['mikro_app.Language']", 'unique': 'True'}),
-            'text': ('django.db.models.fields.CharField', [], {'max_length': '1000'})
         },
         u'mikro_app.static_pages': {
             'Meta': {'ordering': "['num']", 'object_name': 'Static_Pages'},
