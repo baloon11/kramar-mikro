@@ -325,7 +325,21 @@ class Static_Img(models.Model):
         ordering = ['num']
         verbose_name = "фото"
         verbose_name_plural = "Фотографии"
-        
+#---------------------------------------------
+class Static_Img_Text(models.Model):
+    text = models.CharField(u'подпись к фото', max_length=1000) 
+    img = models.ForeignKey(Static_Img, verbose_name='к какому фото относится',unique=True)
+    lang= models.ForeignKey('Language', verbose_name='язык описания',unique=True)    
+
+    def __unicode__(self):
+        return 'фото %s %s' % (self.text,self.lang)
+
+    class Meta:
+        ordering = ['id']
+        verbose_name = " подпись под фото"
+        verbose_name_plural = "Подписи под фотографиями"
+
+#---------------------------------------------        
 
 class Contact(models.Model): 
     contact_subject = models.CharField(max_length=100, verbose_name=u'Тема письма ')
