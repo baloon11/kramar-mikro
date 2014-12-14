@@ -314,13 +314,13 @@ class Orders(models.Model):
 
 class Static_Img(models.Model):
     img = models.ImageField(verbose_name=u'Фото', upload_to='media/', help_text=u'Помещается 5 уменьшеных изображений в строку')    
-    title = models.CharField(u'подпись к фото', max_length=1000) 
+   # title = models.CharField(u'подпись к фото', max_length=1000) 
     num=models.IntegerField(verbose_name=u'Порядковый номер фото при выводе',default=1,unique=True)
 
     start=models.ManyToManyField(Tech_Info,verbose_name=u'Присоединение фото к разделу технической информации')
 
     def __unicode__(self):
-        return self.title
+        return u'фото № %s'% str(self.num)
     class Meta:
         ordering = ['num']
         verbose_name = "фото"
