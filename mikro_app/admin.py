@@ -103,18 +103,15 @@ class Contact_Admin_Form(forms.ModelForm):
     model = Contact
 
 #------------------------------
+class Static_Img_Admin_Form(forms.ModelForm): 
+    class Meta:
+        model = Static_Img
 
-class Static_Img_Admin_Form(forms.ModelForm):
-            #self.fields['%s' % l]
-    model = Static_Img
-  #  lll=forms.CharField(label=u'll', max_length=400)
     def __init__(self, *args, **kwargs):
         super(Static_Img_Admin_Form, self).__init__(*args, **kwargs)
         langs=Language.objects.all()
-        for l in xrange(2):
-            self.fields[str(l)]=forms.CharField(label=str(l), max_length=400)
-
-
+        for lang in langs:
+            self.fields[lang.lang_abbr]=forms.CharField(label=lang.lang_abbr, max_length=400)
 
 #------------------------------
 
