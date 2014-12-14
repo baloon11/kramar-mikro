@@ -102,11 +102,29 @@ class Contact_Admin_Form(forms.ModelForm):
                                     )
     model = Contact
 
+#------------------------------
+
+class Static_Img_Admin_Form(forms.ModelForm):
+            #self.fields['%s' % l]
+    model = Static_Img
+  #  lll=forms.CharField(label=u'll', max_length=400)
+    def __init__(self, *args, **kwargs):
+        super(Static_Img_Admin_Form, self).__init__(*args, **kwargs)
+        langs=Language.objects.all()
+        for l in xrange(2):
+            self.fields[str(l)]=forms.CharField(label=str(l), max_length=400)
+
+
+
+#------------------------------
 
 class Orders_Admin(admin.ModelAdmin):
     form = Orders_Admin_Form
 
-
+#-----------------------------
+class Static_Img_Admin(admin.ModelAdmin):
+    form = Static_Img_Admin_Form
+#-----------------------------
 
 class Contact_Admin(admin.ModelAdmin):
     form = Contact_Admin_Form
@@ -123,10 +141,12 @@ class Basic_Settings_Admin(admin.ModelAdmin):
     list_editable = ('unique','email')    
     model = Basic_Settings
 
+
+
 admin.site.register(Tech_Info)
 admin.site.register(Transport_Company)
 admin.site.register(Orders, Orders_Admin)
-admin.site.register(Static_Img)
+admin.site.register(Static_Img,Static_Img_Admin)
 admin.site.register(Contact, Contact_Admin)
 admin.site.register(Static_Pages)
 admin.site.register(Language, Lang_Admin)
