@@ -106,22 +106,40 @@ class Contact_Admin_Form(forms.ModelForm):
 class Static_Img_Admin_Form(forms.ModelForm): 
     class Meta:
         model = Static_Img
-
     def __init__(self, *args, **kwargs):
         super(Static_Img_Admin_Form, self).__init__(*args, **kwargs)
-        langs=Language.objects.all()
-        for lang in langs:
+        langs=Language.objects.all()     
+        for lang in langs: # тут в цикле создаем доп поля в форме 
             self.fields[lang.lang_abbr]=forms.CharField(label=lang.lang_abbr, max_length=400)
+            
+#-----------------------------
+class Static_Img_Admin(admin.ModelAdmin):
+    form = Static_Img_Admin_Form
 
-#------------------------------
+
+#    def get_fieldsets(self, request, obj=None):
+#        fieldsets = super(Static_Img_Admin, self).get_fieldsets(request, obj)
+
+#        langs=Language.objects.all()
+#        for lang in langs:
+#            fieldsets[0][1]['fields'] +=(lang.lang_abbr,) # тут используем такой же цикл как выше 
+                                                          # (плучаем такие же значения) и добавляем в админку.
+#        return fieldsets
+
+
+    def get_form(self, request, obj=None, **kwargs):
+        langs=Language.objects.all()     
+        self.fields=[]
+        for lang in langs: # тут в цикле добавляем  доп поля в форме в админке    
+            self.fields.append(lang.lang_abbr)
+
+        return super(Static_Img_Admin, self).get_form(request, obj, **kwargs)
+#-----------------------------
 
 class Orders_Admin(admin.ModelAdmin):
     form = Orders_Admin_Form
 
-#-----------------------------
-class Static_Img_Admin(admin.ModelAdmin):
-    form = Static_Img_Admin_Form
-#-----------------------------
+
 
 class Contact_Admin(admin.ModelAdmin):
     form = Contact_Admin_Form
