@@ -103,15 +103,61 @@ class Contact_Admin_Form(forms.ModelForm):
     model = Contact
 
 #------------------------------
+
+#class Static_Img_Admin_Form_Parent(forms.ModelForm):
+#    pass
+
+#langs=Language.objects.all()     
+#for lang in langs: # тут в цикле создаем поля  к  классу формы( не к экземпляру, а ко всему классу)
+#    lang_lang_abbr=lang.lang_abbr    
+#    Static_Img_Admin_Form_Parent.lang_lang_abbr=forms.CharField(label=lang_lang_abbr, max_length=400)
+
+# затем  передадим Static_Img_Admin_Form_Parent как родительский 
+# в Static_Img_Admin_Form -и в нем у нас будут уже доп поля   -не Static_Img_Admin_Form видит род атрибуты в админке
+#  по идее правильно-- в таком варианте нет нужды обращаться к атрибутам родительского класса
+#lang_abbr_list=[]
+
+#langs=Language.objects.all()     
+#for lang in langs:
+#    lang_abbr_list.append(lang.lang_abbr)
+
+
+
 class Static_Img_Admin_Form(forms.ModelForm): 
+
+#    for lang in xrange(1,11):
+#        lang=str(lang)
+#        obj.lang=forms.CharField(max_length=400)
+    
+#    lang=forms.CharField(max_length=400)
+
     class Meta:
         model = Static_Img
+        #fields = ['img', 'num','start']
+
     def __init__(self, *args, **kwargs):
         super(Static_Img_Admin_Form, self).__init__(*args, **kwargs)
         langs=Language.objects.all()     
         for lang in langs: # тут в цикле создаем доп поля в форме 
             self.fields[lang.lang_abbr]=forms.CharField(label=lang.lang_abbr, max_length=400)
-            
+#            self.Meta.fields.append(lang.lang_abbr)
+        self.fields['num'].help_text=self.__dict__
+        self.fields['img'].help_text=Static_Img_Admin_Form.__dict__   
+
+
+#    def __init__(self, *args, **kwargs):
+#        super(Static_Img_Admin_Form, self).__init__(*args, **kwargs)
+#        self.fields['num'].help_text=self.__dict__#.update( super(Static_Img_Admin_Form, self).__dict__ ) 
+#        self.fields['img'].help_text=Static_Img_Admin_Form.__dict__   
+
+
+ #попробуем додавить  атрибуты непосредственно классу Static_Img_Admin_Form
+langs=Language.objects.all()     
+for lang in langs: # тут в цикле создаем поля к классу формы( не к экземпляру, а ко всему классу)
+    lang_lang_abbr=lang.lang_abbr    
+    Static_Img_Admin_Form.base_fields[lang_lang_abbr]=forms.CharField(label=lang_lang_abbr, max_length=400)
+    Static_Img_Admin_Form.declared_fields[lang_lang_abbr]=forms.CharField(label=lang_lang_abbr, max_length=400) 
+
 #-----------------------------
 class Static_Img_Admin(admin.ModelAdmin):
     form = Static_Img_Admin_Form
@@ -127,13 +173,13 @@ class Static_Img_Admin(admin.ModelAdmin):
 #        return fieldsets
 
 
-    def get_form(self, request, obj=None, **kwargs):
-        langs=Language.objects.all()     
-        self.fields=[]
-        for lang in langs: # тут в цикле добавляем  доп поля в форме в админке    
-            self.fields.append(lang.lang_abbr)
+ #   def get_form(self, request, obj=None, **kwargs):
+ #       langs=Language.objects.all()     
+ #       self.fields=[]
+ #       for lang in langs: # тут в цикле добавляем  доп поля в форме в админке    
+ #           self.fields.append(lang.lang_abbr)
 
-        return super(Static_Img_Admin, self).get_form(request, obj, **kwargs)
+  #      return super(Static_Img_Admin, self).get_form(request, obj, **kwargs)
 #-----------------------------
 
 class Orders_Admin(admin.ModelAdmin):
