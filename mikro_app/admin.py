@@ -119,17 +119,12 @@ class Static_Img_Admin_Form(forms.ModelForm):
         langs=Language.objects.all()     
         for lang in langs:
             if self.instance.pk is not None:
+                static_image_text=Static_Img_Text.objects.filter(img=self.instance)
+                text_instanse=static_image_text.get(lang=lang.lang_abbr)
+                self.fields[lang.lang_abbr].initial=text_instanse.text
 
-            #if self.instanсe:
-             #   pass
-
-                self.fields[lang.lang_abbr].initial=u'так'
-
-
-        self.fields['num'].help_text=self.__dict__
-        self.fields['img'].help_text=Static_Img_Admin_Form.__dict__   
-
-
+       # self.fields['num'].help_text=self.__dict__
+       # self.fields['img'].help_text=Static_Img_Admin_Form.__dict__   
 
 
  #добавляем атрибуты непосредственно классу Static_Img_Admin_Form
