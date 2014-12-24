@@ -2,10 +2,10 @@
 from django.contrib import admin
 from django import forms
 from mikro_app.models import (Tech_Info, Transport_Company, 
-	                          Orders, Static_Img, Contact,
-	                          Static_Pages, Language, Currency,
-	                          Country, PaymentMethod,Basic_Settings,
-	                          Social_Network,Static_Img_Text)
+                              Orders, Static_Img, Contact,
+                              Static_Pages, Language, Currency,
+                              Country, PaymentMethod,Basic_Settings,
+                              Social_Network,Static_Img_Text)
 
 label_transport_company = Tech_Info.objects.get(id=1).label_transport_company
 
@@ -156,7 +156,7 @@ class Static_Img_Admin_Form(forms.ModelForm):
 
 
  #попробуем додавить  атрибуты непосредственно классу Static_Img_Admin_Form
-langs=Language.objects.all()     
+langs=Language.objects.all().order_by('id')     
 for lang in langs: # тут в цикле создаем поля к классу формы( не к экземпляру, а ко всему классу)
     lang_lang_abbr=lang.lang_abbr    
     Static_Img_Admin_Form.base_fields[lang_lang_abbr]=forms.CharField(label=lang_lang_abbr, max_length=400)
@@ -167,14 +167,28 @@ class Static_Img_Admin(admin.ModelAdmin):
     form = Static_Img_Admin_Form
 
     def save_model(self, request, obj, form, change):
-        langs=Language.objects.all()     
-        for lang in langs:
-        	if change==False:#если  этот обект создается, а не изменяется, то создаем новыю запись в Static_Img_Text
-        	    form.cleaned_data[lang.lang_abbr]# записываем в поле lang Static_Img_Text
-
-           #lang_lang_abbr=lang.lang_abbr    
-        
         obj.save()
+        langs=Language.objects.all().order_by('id')     
+        for lang in langs:
+            if change==False:#если  этот объект создается, а не изменяется, то создаем новую запись в Static_Img_Text
+                #static_img=Static_Img.objects.get(id=obj.id)
+                Static_Img_Text.objects.create(text=form.cleaned_data[lang.lang_abbr],
+                                               img=obj,#static_img,
+                                               lang=lang.lang_abbr)
+
+            else: #если  этот объект изменяется, а не создается, то редактируем уже существующую запись в Static_Img_Text 
+               # text_model_instances=obj.text_for_img #.get(lang=lang.lang_abbr) #тут в цикле получаем список нужных Static_Img_Text
+               # text_model_instance=text_model_instances.get(lang=lang.lang_abbr) # тут выбираем один, с нужным языком
+                #text_model_instance=Static_Img.objects.get(id=obj.id) #obj.text_for_img
+                #text_model_instance.text=form.cleaned_data[lang.lang_abbr]
+                #text_model_instance.save()
+                static_image_text=Static_Img_Text.objects.filter(img=obj)# находим все экземпляры Static_Img_Text,  связанные с текущим экз модели obj
+                text_instanse=static_image_text.get(lang=lang.lang_abbr)
+                text_instanse.text=form.cleaned_data[lang.lang_abbr]
+                text_instanse.save()
+
+        
+        #obj.save()
 
 
 #    def get_fieldsets(self, request, obj=None):
@@ -230,3 +244,5 @@ admin.site.register(Country, Country_Admin)
 admin.site.register(PaymentMethod)
 admin.site.register(Basic_Settings,Basic_Settings_Admin)
 admin.site.register(Social_Network)
+admin.site.register(Static_Img_Text)
+

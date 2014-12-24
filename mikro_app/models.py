@@ -325,21 +325,7 @@ class Static_Img(models.Model):
         ordering = ['num']
         verbose_name = "фото"
         verbose_name_plural = "Фотографии"
-#---------------------------------------------
-class Static_Img_Text(models.Model):
-    text = models.CharField(u'подпись к фото', max_length=1000) 
-    img = models.ForeignKey(Static_Img, verbose_name='к какому фото относится',unique=True)
-    lang= models.CharField(verbose_name=u'язык описания',unique=True,max_length=3)    
-
-    def __unicode__(self):
-        return 'фото %s %s' % (self.text,self.lang)
-
-    class Meta:
-        ordering = ['id']
-        verbose_name = " подпись под фото"
-        verbose_name_plural = "Подписи под фотографиями"
-
-#---------------------------------------------        
+       
 
 class Contact(models.Model): 
     contact_subject = models.CharField(max_length=100, verbose_name=u'Тема письма ')
@@ -373,7 +359,7 @@ class Static_Pages(models.Model):
 class Language(models.Model):
     lang_abbr= models.CharField(u'двух(трех)буквенная аббревиатура языка',max_length=3,unique=True) 
     default=models.BooleanField(default=False,
-                                verbose_name=u'язык по умолчанию')
+                                verbose_name=u'язык по умолчанию') 
                                     
     def __unicode__(self):
         if self.default==True:
@@ -383,6 +369,25 @@ class Language(models.Model):
         return '%s %s' % (self.lang_abbr,def_ault)
     class Meta:
         verbose_name_plural = "Языки"
+
+
+
+#---------------------------------------------
+class Static_Img_Text(models.Model):
+    text = models.CharField(u'подпись к фото', max_length=1000,default=u'text') 
+    img = models.ForeignKey(Static_Img, verbose_name=u'к какому фото относится',related_name='text_for_img')
+    lang= models.CharField(verbose_name=u'язык описания',max_length=3)    
+
+    def __unicode__(self):
+        return ' %s %s' % (self.text,self.lang)
+
+    class Meta:
+        ordering = ['id']
+        verbose_name = " подпись под фото"
+        verbose_name_plural = "Подписи под фотографиями"
+
+#--------------------------------------------
+
 
 class Currency (models.Model):
     curr_abbr= models.CharField(u'название валюты',max_length=100,unique=True) 
