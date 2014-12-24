@@ -317,7 +317,7 @@ class Static_Img(models.Model):
    # title = models.CharField(u'подпись к фото', max_length=1000) 
     num=models.IntegerField(verbose_name=u'Порядковый номер фото при выводе',default=1,unique=True)
 
-    start=models.ManyToManyField(Tech_Info,verbose_name=u'Присоединение фото к разделу технической информации')
+   # start=models.ManyToManyField(Tech_Info,verbose_name=u'Присоединение фото к разделу технической информации')
 
     def __unicode__(self):
         return u'фото № %s'% str(self.num)
@@ -325,7 +325,22 @@ class Static_Img(models.Model):
         ordering = ['num']
         verbose_name = "фото"
         verbose_name_plural = "Фотографии"
-       
+
+#---------------------------------------------
+class Static_Img_Text(models.Model):
+    text = models.CharField(u'подпись к фото', max_length=1000,default=u'text') 
+    img = models.ForeignKey(Static_Img, verbose_name=u'к какому фото относится',related_name='text_for_img')
+    lang= models.CharField(verbose_name=u'язык описания',max_length=3)    
+
+    def __unicode__(self):
+        return ' %s %s' % (self.text,self.lang)
+
+    class Meta:
+        ordering = ['id']
+        verbose_name = " подпись под фото"
+        verbose_name_plural = "Подписи под фотографиями"
+
+#--------------------------------------------
 
 class Contact(models.Model): 
     contact_subject = models.CharField(max_length=100, verbose_name=u'Тема письма ')
@@ -369,24 +384,6 @@ class Language(models.Model):
         return '%s %s' % (self.lang_abbr,def_ault)
     class Meta:
         verbose_name_plural = "Языки"
-
-
-
-#---------------------------------------------
-class Static_Img_Text(models.Model):
-    text = models.CharField(u'подпись к фото', max_length=1000,default=u'text') 
-    img = models.ForeignKey(Static_Img, verbose_name=u'к какому фото относится',related_name='text_for_img')
-    lang= models.CharField(verbose_name=u'язык описания',max_length=3)    
-
-    def __unicode__(self):
-        return ' %s %s' % (self.text,self.lang)
-
-    class Meta:
-        ordering = ['id']
-        verbose_name = " подпись под фото"
-        verbose_name_plural = "Подписи под фотографиями"
-
-#--------------------------------------------
 
 
 class Currency (models.Model):
