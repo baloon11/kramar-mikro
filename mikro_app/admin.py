@@ -106,34 +106,9 @@ class Contact_Admin_Form(forms.ModelForm):
                                     )
     model = Contact
 
-#------------------------------
-
-#class Static_Img_Admin_Form_Parent(forms.ModelForm):
-#    pass
-
-#langs=Language.objects.all()     
-#for lang in langs: # тут в цикле создаем поля  к  классу формы( не к экземпляру, а ко всему классу)
-#    lang_lang_abbr=lang.lang_abbr    
-#    Static_Img_Admin_Form_Parent.lang_lang_abbr=forms.CharField(label=lang_lang_abbr, max_length=400)
-
-# затем  передадим Static_Img_Admin_Form_Parent как родительский 
-# в Static_Img_Admin_Form -и в нем у нас будут уже доп поля   -не Static_Img_Admin_Form видит род атрибуты в админке
-#  по идее правильно-- в таком варианте нет нужды обращаться к атрибутам родительского класса
-#lang_abbr_list=[]
-
-#langs=Language.objects.all()     
-#for lang in langs:
-#    lang_abbr_list.append(lang.lang_abbr)
-
 
 
 class Static_Img_Admin_Form(forms.ModelForm): 
-
-#    for lang in xrange(1,11):
-#        lang=str(lang)
-#        obj.lang=forms.CharField(max_length=400)
-    
-#    lang=forms.CharField(max_length=400)
 
     class Meta:
         model = Static_Img
@@ -142,22 +117,24 @@ class Static_Img_Admin_Form(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(Static_Img_Admin_Form, self).__init__(*args, **kwargs)
         langs=Language.objects.all()     
-        for lang in langs: # тут в цикле создаем доп поля в форме 
-            self.fields[lang.lang_abbr]=forms.CharField(label=lang.lang_abbr, max_length=400)
-#            self.Meta.fields.append(lang.lang_abbr)
+        for lang in langs:
+            if self.instance.pk is not None:
+
+            #if self.instanсe:
+             #   pass
+
+                self.fields[lang.lang_abbr].initial=u'так'
+
+
         self.fields['num'].help_text=self.__dict__
         self.fields['img'].help_text=Static_Img_Admin_Form.__dict__   
 
 
-#    def __init__(self, *args, **kwargs):
-#        super(Static_Img_Admin_Form, self).__init__(*args, **kwargs)
-#        self.fields['num'].help_text=self.__dict__#.update( super(Static_Img_Admin_Form, self).__dict__ ) 
-#        self.fields['img'].help_text=Static_Img_Admin_Form.__dict__   
 
 
- #попробуем додавить  атрибуты непосредственно классу Static_Img_Admin_Form
+ #добавляем атрибуты непосредственно классу Static_Img_Admin_Form
 langs=Language.objects.all().order_by('id')     
-for lang in langs: # тут в цикле создаем поля к классу формы( не к экземпляру, а ко всему классу)
+for lang in langs: # тут в цикле создаем поля к классу формы(не к экземпляру, а ко всему классу)
     lang_lang_abbr=lang.lang_abbr    
     Static_Img_Admin_Form.base_fields[lang_lang_abbr]=forms.CharField(label=lang_lang_abbr, max_length=400)
     Static_Img_Admin_Form.declared_fields[lang_lang_abbr]=forms.CharField(label=lang_lang_abbr, max_length=400) 
@@ -171,48 +148,20 @@ class Static_Img_Admin(admin.ModelAdmin):
         langs=Language.objects.all().order_by('id')     
         for lang in langs:
             if change==False:#если  этот объект создается, а не изменяется, то создаем новую запись в Static_Img_Text
-                #static_img=Static_Img.objects.get(id=obj.id)
                 Static_Img_Text.objects.create(text=form.cleaned_data[lang.lang_abbr],
-                                               img=obj,#static_img,
+                                               img=obj,
                                                lang=lang.lang_abbr)
 
             else: #если  этот объект изменяется, а не создается, то редактируем уже существующую запись в Static_Img_Text 
-               # text_model_instances=obj.text_for_img #.get(lang=lang.lang_abbr) #тут в цикле получаем список нужных Static_Img_Text
-               # text_model_instance=text_model_instances.get(lang=lang.lang_abbr) # тут выбираем один, с нужным языком
-                #text_model_instance=Static_Img.objects.get(id=obj.id) #obj.text_for_img
-                #text_model_instance.text=form.cleaned_data[lang.lang_abbr]
-                #text_model_instance.save()
                 static_image_text=Static_Img_Text.objects.filter(img=obj)# находим все экземпляры Static_Img_Text,  связанные с текущим экз модели obj
                 text_instanse=static_image_text.get(lang=lang.lang_abbr)
                 text_instanse.text=form.cleaned_data[lang.lang_abbr]
                 text_instanse.save()
 
-        
-        #obj.save()
 
-
-#    def get_fieldsets(self, request, obj=None):
-#        fieldsets = super(Static_Img_Admin, self).get_fieldsets(request, obj)
-
-#        langs=Language.objects.all()
-#        for lang in langs:
-#            fieldsets[0][1]['fields'] +=(lang.lang_abbr,) # тут используем такой же цикл как выше 
-                                                          # (плучаем такие же значения) и добавляем в админку.
-#        return fieldsets
-
-
- #   def get_form(self, request, obj=None, **kwargs):
- #       langs=Language.objects.all()     
- #       self.fields=[]
- #       for lang in langs: # тут в цикле добавляем  доп поля в форме в админке    
- #           self.fields.append(lang.lang_abbr)
-
-  #      return super(Static_Img_Admin, self).get_form(request, obj, **kwargs)
-#-----------------------------
 
 class Orders_Admin(admin.ModelAdmin):
     form = Orders_Admin_Form
-
 
 
 class Contact_Admin(admin.ModelAdmin):
