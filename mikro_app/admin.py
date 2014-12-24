@@ -1,7 +1,11 @@
 # coding: utf-8
 from django.contrib import admin
 from django import forms
-from mikro_app.models import Tech_Info, Transport_Company, Orders, Static_Img, Contact, Static_Pages, Language, Currency, Country, PaymentMethod,Basic_Settings,Social_Network
+from mikro_app.models import (Tech_Info, Transport_Company, 
+	                          Orders, Static_Img, Contact,
+	                          Static_Pages, Language, Currency,
+	                          Country, PaymentMethod,Basic_Settings,
+	                          Social_Network,Static_Img_Text)
 
 label_transport_company = Tech_Info.objects.get(id=1).label_transport_company
 
@@ -161,6 +165,16 @@ for lang in langs: # тут в цикле создаем поля к класс�
 #-----------------------------
 class Static_Img_Admin(admin.ModelAdmin):
     form = Static_Img_Admin_Form
+
+    def save_model(self, request, obj, form, change):
+        langs=Language.objects.all()     
+        for lang in langs:
+        	if change==False:#если  этот обект создается, а не изменяется, то создаем новыю запись в Static_Img_Text
+        	    form.cleaned_data[lang.lang_abbr]# записываем в поле lang Static_Img_Text
+
+           #lang_lang_abbr=lang.lang_abbr    
+        
+        obj.save()
 
 
 #    def get_fieldsets(self, request, obj=None):

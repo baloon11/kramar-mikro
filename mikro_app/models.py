@@ -329,7 +329,7 @@ class Static_Img(models.Model):
 class Static_Img_Text(models.Model):
     text = models.CharField(u'подпись к фото', max_length=1000) 
     img = models.ForeignKey(Static_Img, verbose_name='к какому фото относится',unique=True)
-    lang= models.ForeignKey('Language', verbose_name='язык описания',unique=True)    
+    lang= models.CharField(verbose_name=u'язык описания',unique=True,max_length=3)    
 
     def __unicode__(self):
         return 'фото %s %s' % (self.text,self.lang)
