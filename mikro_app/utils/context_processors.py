@@ -16,7 +16,6 @@ def all_currencies():
 
 def my_vars(request):
     return {      
-        'static_img':Static_Img.objects.all(),
         'static_pages':Static_Pages.objects.all(),
         'all_languages':all_languages(),
         'all_currencies':all_currencies(),

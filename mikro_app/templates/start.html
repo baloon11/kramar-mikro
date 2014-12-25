@@ -26,25 +26,24 @@
 
 {%endif%}
 <br>
-<br>
+<br> 
 <div align="center">
-{% if static_img.count%}
+{% if static_img %}
 <div align="center">
 
 <ul class="thumbnails">
-    
-{% for img in static_img%}
+
+{% for img,img_text in static_img %}
                                 
     <li class="span2">    
-    <a href="{{img.img.url}}" class="thumbnail"  rel="lightbox[slideshow]" >
-        <img src="{{img.img.url}}">
+    <a href="{{img.img.url}}" class="thumbnail"  rel="lightbox[slideshow]" title="{{img_text}}">
+        <img src="{{img.img.url}}"  alt="{{img_text}}">
     </a>
     </li>
 {%endfor%}    
     </ul>
 
 </div>
-
 {%endif%}
 {{tech_info.homepage_text|safe}} 
 <br>

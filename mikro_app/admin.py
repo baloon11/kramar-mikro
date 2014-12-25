@@ -121,6 +121,7 @@ class Static_Img_Admin_Form(forms.ModelForm):
             if self.instance.pk is not None:
                 static_image_text=Static_Img_Text.objects.filter(img=self.instance)
                 text_instanse=static_image_text.get(lang=lang.lang_abbr)
+
                 self.fields[lang.lang_abbr].initial=text_instanse.text
 
        # self.fields['num'].help_text=self.__dict__
@@ -188,5 +189,5 @@ admin.site.register(Country, Country_Admin)
 admin.site.register(PaymentMethod)
 admin.site.register(Basic_Settings,Basic_Settings_Admin)
 admin.site.register(Social_Network)
-admin.site.register(Static_Img_Text)
+#admin.site.register(Static_Img_Text)
 

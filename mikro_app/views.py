@@ -1,7 +1,15 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render_to_response
-from mikro_app.models import Tech_Info, Transport_Company, Orders, Contact, Static_Pages, Language, Currency, Country, PaymentMethod,Basic_Settings
-from mikro_app.forms import Homepage_Form, Homepage_Form_Unique, Orders_Form,Orders_Form_My_Country, Contacts
+from mikro_app.models import (Tech_Info, Transport_Company,
+                              Orders, Contact, 
+                              Static_Pages,Static_Img,Static_Img_Text,
+                              Language, Currency, Country,
+                              PaymentMethod,Basic_Settings)
+
+
+from mikro_app.forms import (Homepage_Form, Homepage_Form_Unique,
+                             Orders_Form, Orders_Form_My_Country, Contacts)
+
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
@@ -36,6 +44,13 @@ def start(request, lang='', curr=''):
     tech_info = lang_id(lang)
     lang = lang_def(lang)
 
+    static_img_list=[]
+    static_img=Static_Img.objects.all()
+    for st_img in static_img:
+      img_text_instance=Static_Img_Text.objects.get(lang=lang,img=st_img)
+      static_img_list.append([st_img,img_text_instance.text]) 
+
+
     if Basic_Settings.objects.get(id=1).unique == True:
         if request.method == 'POST':
             form = Homepage_Form_Unique(request.POST)
@@ -52,6 +67,8 @@ def start(request, lang='', curr=''):
                                                  'lang': lang,
                                                  'tech_info': tech_info,
                                                  'curr': curr,
+                                                 'static_img':static_img_list,#Static_Img.objects.all(),#filter(static_img_text__lang=lang),
+                                                 # static_img_text
                                                  'view': 'start'},
                                   context_instance=RequestContext(request))
 
@@ -71,6 +88,7 @@ def start(request, lang='', curr=''):
                                                  'lang': lang,
                                                  'tech_info': tech_info,
                                                  'curr': curr,
+                                                 'static_img':static_img_list,#Static_Img.objects.all(),
                                                  'view': 'start'},
                                   context_instance=RequestContext(request))
 
