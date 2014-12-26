@@ -7,6 +7,8 @@ from mikro_app.models import (Tech_Info, Transport_Company,
                               Country, PaymentMethod,Basic_Settings,
                               Social_Network,Static_Img_Text)
 
+from django.core.exceptions import ObjectDoesNotExist
+
 label_transport_company = Tech_Info.objects.get(id=1).label_transport_company
 
 
@@ -175,14 +177,37 @@ class Basic_Settings_Admin(admin.ModelAdmin):
     list_editable = ('unique','email')    
     model = Basic_Settings
 
+#================================
+class Static_Pages_Form(forms.ModelForm):
+    class Meta:
+        model = Static_Pages
 
+    def clean_num(self):
+        try:
+            Static_Pages.objects.get(lang=self.cleaned_data['lang'],num=self.cleaned_data['num'])
+            raise forms.ValidationError(u'Для этого языка такой порядковый номер \
+                                          стат. страницы уже существует ')
+        except ObjectDoesNotExist:
+            pass
+    
+        return self.cleaned_data['num']
+
+
+
+
+#================================
+
+
+class Static_Pages_Admin(admin.ModelAdmin):
+    form = Static_Pages_Form
+    list_filter = ('lang',)
 
 admin.site.register(Tech_Info)
 admin.site.register(Transport_Company)
 admin.site.register(Orders, Orders_Admin)
 admin.site.register(Static_Img,Static_Img_Admin)
 admin.site.register(Contact, Contact_Admin)
-admin.site.register(Static_Pages)
+admin.site.register(Static_Pages,Static_Pages_Admin)
 admin.site.register(Language, Lang_Admin)
 admin.site.register(Currency, Currency_Admin)
 admin.site.register(Country, Country_Admin)

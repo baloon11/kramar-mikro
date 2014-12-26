@@ -363,7 +363,10 @@ class Contact(models.Model):
 class Static_Pages(models.Model):
     title = models.CharField(u'Title', max_length=1000,blank=True) 
     text = RedactorField(verbose_name=u'Текст на странице',default=u'This page is under construction')
-    num=models.IntegerField(verbose_name=u'Порядковый номер страницы в списке',unique=True)
+    lang=models.ForeignKey('Language')
+    num=models.IntegerField(verbose_name=u'Порядковый номер страницы в списке')
+    
+
     def __unicode__(self):
         return '%s %s%s' % (self.title,u'порядковый номер ',self.num)
     class Meta:
