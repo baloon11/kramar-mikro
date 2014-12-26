@@ -74,11 +74,13 @@ href="{% url 'shipping_and_payment' lang=lang curr=curr %}">{{tech_info.label_bu
 {% if view == "order_view" %}
 href="{% url view lang=language.lang_abbr num=num curr=curr country=country %}">{{language.lang_abbr}} </a>
 
-{% elif view == "static_page" %}
-href="{% url view lang=lang num=static_page.num curr=curr %}">{{language.lang_abbr}} </a>
-
 {%else%}
+
+{% if view != "static_page" %}
 href="{% url view lang=language.lang_abbr curr=curr %}">{{language.lang_abbr}} </a>
+{%else%} 
+{% endif %}
+
 {% endif %}
 {%endfor%}
 

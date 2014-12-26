@@ -204,7 +204,8 @@ def contacts(request, lang='', curr=''):
 def static_page(request, num, lang='', curr=''):
     tech_info = lang_id(lang)
     return render_to_response(
-        'static_page.html', {'static_page': Static_Pages.objects.get(num=num),
+        'static_page.html', {'static_page': Static_Pages.objects.get(lang=Language.objects.get(lang_abbr=lang),
+                                                                     num=num),
                              'tech_info': tech_info,
                              'lang': lang,
                              'curr': curr,
