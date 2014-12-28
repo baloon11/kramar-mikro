@@ -1,2 +1,8 @@
 cd /home/mikita/gamov_and_kramar_mikro_ubuntu/kramar_mikro_short_version_1_stab/
 source /home/mikita/gamov_and_kramar_mikro_ubuntu/kramar_mikro_short_version_1_stab/kramar-mikro_env/bin/activate
+
+
+$ git rm log/\*.log
+git rm mikro_app/migrations/\*.pyc
+
+git rm mikro_app/templatetags/\*.pyc
