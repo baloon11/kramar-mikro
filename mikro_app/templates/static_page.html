@@ -5,10 +5,10 @@
 
 {% block center %}
 <div align="center">
- <h4>{{static_page.title}}</h4>    
+ <h4>{{render_static_page.title}}</h4>    
 </div>
 
 <div align="center">
-{{static_page.text|safe}}    
+{{render_static_page.text|safe}}    
 </div>
 {% endblock %}

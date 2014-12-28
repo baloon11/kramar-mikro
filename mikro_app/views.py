@@ -15,6 +15,7 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
 
+
 def lang_id(lang):
     def_lang = Language.objects.filter(default=True)
     if def_lang.count() == 1:
@@ -60,6 +61,7 @@ def start(request, lang='', curr=''):
                                                     kwargs={'num': 1,
                                                             'lang': lang,
                                                             'curr': curr,
+                                                           # 'static_pages':static_pages(request,lang),
                                                             'country': fcd['country']}))
         else:
             form = Homepage_Form_Unique()
@@ -69,6 +71,7 @@ def start(request, lang='', curr=''):
                                                  'curr': curr,
                                                  'static_img':static_img_list,#Static_Img.objects.all(),#filter(static_img_text__lang=lang),
                                                  # static_img_text
+                                                # 'static_pages':static_pages(request,lang),
                                                  'view': 'start'},
                                   context_instance=RequestContext(request))
 
@@ -81,6 +84,7 @@ def start(request, lang='', curr=''):
                                                     kwargs={'num': fcd['num'],
                                                             'lang': lang,
                                                             'country': fcd['country'],
+                                                           # 'static_pages':static_pages(request,lang),
                                                             'curr': curr}))
         else:
             form = Homepage_Form()
@@ -89,6 +93,7 @@ def start(request, lang='', curr=''):
                                                  'tech_info': tech_info,
                                                  'curr': curr,
                                                  'static_img':static_img_list,#Static_Img.objects.all(),
+                                                # 'static_pages':static_pages(request,lang),
                                                  'view': 'start'},
                                   context_instance=RequestContext(request))
 
@@ -203,9 +208,10 @@ def contacts(request, lang='', curr=''):
 
 def static_page(request, num, lang='', curr=''):
     tech_info = lang_id(lang)
+    static_page=Static_Pages.objects.get( lang=Language.objects.get(lang_abbr=lang),num=num )
     return render_to_response(
-        'static_page.html', {'static_page': Static_Pages.objects.get(lang=Language.objects.get(lang_abbr=lang),
-                                                                     num=num),
+        'static_page.html', {'render_static_page':static_page,
+                             'static_page_num':static_page.num, 
                              'tech_info': tech_info,
                              'lang': lang,
                              'curr': curr,

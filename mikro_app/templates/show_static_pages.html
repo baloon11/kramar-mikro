@@ -1,0 +1,4 @@
+{% for  static_page in static_pages %}
+<a class="btn btn-inverse"
+href="{% url 'static_page' lang=static_page.lang.lang_abbr curr=curr num=static_page.num %}">{{static_page.title}}</a>
+{%endfor%}
