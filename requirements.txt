@@ -1,4 +1,5 @@
-Django
-django-wysiwyg-redactor
-PIL
-south
+Django==1.6.2
+PIL==1.1.7
+South==1.0.1
+django-wysiwyg-redactor==0.3.9
+
